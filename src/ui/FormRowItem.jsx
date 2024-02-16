@@ -30,6 +30,7 @@ const RowError = styled.span`
   color: #f83b3b;
   padding-left: 20%;
   letter-spacing: 0.5px;
+  filter: drop-shadow(0 0 1px #f00);
 `
 
 function FormRowItem({label, children, error}) {

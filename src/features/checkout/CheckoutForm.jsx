@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { clearCart, getCart, getTotalCartPrice, getTotalCartQuantity } from "../cart/cartSlice";
@@ -8,6 +8,7 @@ import FormRowItem from "../../ui/FormRowItem";
 import { formatCurrency, formatDate } from "../../utilities/helpers";
 import { DELIVERY_COST, DELIVERY_DAYS } from "../../utilities/constants";
 import { HiCreditCard } from "react-icons/hi";
+import { getLocation } from "../../services/apiLocation";
 
 const StyledCheckoutContainer = styled.form`
   width: 100%;
@@ -236,6 +237,7 @@ const StyledCheckoutBtn = styled.button`
 function CheckoutForm() {
   const { register, formState, handleSubmit } = useForm();
   const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [location, setLocation] = useState("");
   const { errors } = formState;
   const cart = useSelector(getCart);
   const dispatch = useDispatch();
@@ -244,6 +246,27 @@ function CheckoutForm() {
   const deliveryCost = quantity * DELIVERY_COST;
   const currentDate = new Date();
   const deliveredDate = new Date(currentDate.getTime() + DELIVERY_DAYS * 24 * 60 * 60 * 1000);
+
+  useEffect(() => {
+    try {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const newLocation = {
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+        }
+        getLocation(newLocation)
+          .then(res => {
+            setLocation(`${res.country && res.country != undefined ? res.country + "," : ""} ${res.state && res.state != undefined ? res.state + "," : ""} ${res.road && res.road != undefined ? res.road : ""}`);
+          })
+      })
+    } catch(err) {
+      throw new Error(`Faild to get location: ${err.message}`);
+    }
+  }, [])
+
+  function handleLocationChange(e) {
+    setLocation(e.target.value)
+  }
 
   function handlePaymentMethod(e) {
     setPaymentMethod(e.target.value);
@@ -267,14 +290,15 @@ function CheckoutForm() {
         <FormRowItem
           key="location input"
           label="Location"
-          error={errors?.location?.message}
+          error={!location ? "This field is required" : ""}
         >
           <StyledInput 
             id="locationInput"
             type="text"
             placeholder="Enter your location"
             name="location"
-            {...register("location", { required: "This field is required" })}
+            value={location}
+            onChange={handleLocationChange}
           />
         </FormRowItem>
         

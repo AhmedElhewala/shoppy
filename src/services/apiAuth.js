@@ -72,6 +72,16 @@ export async function refreshAccessToken() {
   }
 }
 
+export async function update(id, requestBody) {
+  try {
+    const req = await axios.put(`${BASE_URL}/users/${id}`, requestBody)
+
+    return req.data;
+  } catch(err) {
+    throw new Error(`Error updating profile: ${err.message}`);
+  }
+}
+
 export function setAccessTokenCookie(accessToken, expires) {
   Cookies.set(ACCESS_TOKEN_COOKIE, accessToken, { expires });
 }

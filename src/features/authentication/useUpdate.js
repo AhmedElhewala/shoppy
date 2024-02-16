@@ -1,21 +1,22 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { login as loginApi } from "../../services/apiAuth"
-import { useNavigate } from 'react-router-dom';
+import { update as updateApi } from "../../services/apiAuth"
 import { useDispatch } from "react-redux";
 import { setUser } from './userSlice';
+import toast from "react-hot-toast";
 
 function useLogin(){
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const { isLoading, mutate: login, error } = useMutation({
-    mutationFn: ({email, password, isRemmbered}) => loginApi({ email, password, isRemmbered }),
+  const { isLoading, mutate: update, error } = useMutation({
+    mutationFn: (requestBody) => updateApi(requestBody.id, requestBody),
 
     onSuccess: (res) => {
       queryClient.setQueryData(["user"], res);
       dispatch(setUser(res));
-      navigate('/', { replace: true });
+      toast.success(
+        "Account successfully updated! Congratulations 🥳"
+      );
     },
 
     onError: (err) => {
@@ -23,7 +24,7 @@ function useLogin(){
     },
   })
 
-  return {isLoading, login, error}
+  return {isLoading, update, error}
 }
 
 export default useLogin;
