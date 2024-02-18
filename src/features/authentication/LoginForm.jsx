@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import useLogin from "./useLogin";
 import Spinner from "../../ui/Spinner"
+import { useNavigate } from 'react-router-dom';
 
 import FormRowItem from "../../ui/FormRowItem";
 import { Link } from "react-router-dom";
@@ -127,6 +128,7 @@ function LoginForm() {
   const [isChecked, setIsChecked] = useState(false);
   const { login } = useLogin();
   const [isFormLoading, setIsFormLoading] = useState(false);
+  const navigate = useNavigate();
 
   function handleTogglePassword() {
     setShowPassword(show => !show)
@@ -141,7 +143,10 @@ function LoginForm() {
 
     login(
       {email, password, isRemmbered: isChecked}, 
-      {onSettled: () => setIsFormLoading(false)}
+      {onSettled: () => {
+        navigate("/", { replace: true });
+        setIsFormLoading(false);
+      }}
     );
   }
 

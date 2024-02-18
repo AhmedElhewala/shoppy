@@ -1,9 +1,12 @@
 import styled from "styled-components";
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import { useThemeMode } from "../context/ThemeContext";
+import { getUser } from "../features/authentication/userSlice";
 
 import logoLightPath from "/logo-light.png";
 import logoDarkPath from "/logo-dark.png";
+import { useEffect } from "react";
 
 const StyledAuth = styled.section`
   width: 100%;
@@ -74,6 +77,14 @@ const LogoImg = styled.img`
 
 function Auth() {
   const {isDark} = useThemeMode();
+  const user = useSelector(getUser);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate(-1 || "/", {replace: true})
+    }
+  }, [user]);
 
   return (
     <StyledAuth>

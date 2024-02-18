@@ -106,13 +106,17 @@ const StyledNavSubMenuItemLink = styled(NavLink)`
 
 function NavList({isAsideOpen}) {
   const user = useSelector(getUser);
-  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+  const [submenuOpen, setSubmenuOpen] = useState(false);
   const {isLoading, categories} = useCategoryList();
 
   if (isLoading) return <Spinner />
 
-  function toggleOpenSubmenu() {
-    setIsSubmenuOpen(open => !open);
+  function toggleOpenSubmenu(wrapper) {
+    if (submenuOpen === wrapper) {
+      setSubmenuOpen("");
+    } else {
+      setSubmenuOpen(wrapper);
+    }
   }
   
   return (
@@ -128,12 +132,46 @@ function NavList({isAsideOpen}) {
 
       {user?.role === "admin" && (
         <NavItemContainer>
-          <NavItemLink to="/dashboard" title="Dashboard" >
+          <NavItemLink
+            to="/dashboard"
+            title="Dashboard"
+            className={location.pathname.split("/")[1] === "dashboard" && "active"}
+          >
             <NavItemLinkContent>
               <HiDatabase />
               Dashboard
             </NavItemLinkContent>
+            <SubmenuOpenBtn
+              onClick={
+                (e) => {
+                  e.preventDefault();
+                  toggleOpenSubmenu("dashboard")
+                }
+              }
+              className={submenuOpen === "dashboard" ? "rotate" : ""}
+            >
+              <HiChevronDown />
+            </SubmenuOpenBtn>
           </NavItemLink>
+          <NavItemSubMenu
+            className={submenuOpen === "dashboard" && isAsideOpen ? "open" : ""}
+          >
+            <StyledNavSubMenuItem key="user">
+              <StyledNavSubMenuItemLink to="/dashboard/user">
+                Users
+              </StyledNavSubMenuItemLink>
+            </StyledNavSubMenuItem>
+            <StyledNavSubMenuItem key="category">
+              <StyledNavSubMenuItemLink to="/dashboard/category">
+                Categories
+              </StyledNavSubMenuItemLink>
+            </StyledNavSubMenuItem>
+            <StyledNavSubMenuItem key="product">
+              <StyledNavSubMenuItemLink to="/dashboard/product">
+                Products
+              </StyledNavSubMenuItemLink>
+            </StyledNavSubMenuItem>
+          </NavItemSubMenu>
         </NavItemContainer>
       )}
 
@@ -152,10 +190,10 @@ function NavList({isAsideOpen}) {
               onClick={
                 (e) => {
                   e.preventDefault();
-                  toggleOpenSubmenu()
+                  toggleOpenSubmenu("category")
                 }
               }
-              className={isSubmenuOpen ? "rotate" : ""}
+              className={submenuOpen === "category" ? "rotate" : ""}
             >
               <HiChevronDown />
             </SubmenuOpenBtn>
@@ -163,7 +201,7 @@ function NavList({isAsideOpen}) {
         }
         {categories && categories.length > 0 && 
           <NavItemSubMenu
-            className={isSubmenuOpen && isAsideOpen ? "open" : ""}
+            className={submenuOpen === "category" && isAsideOpen ? "open" : ""}
           >
             {categories.map(category => (
               <StyledNavSubMenuItem key={category.id}>

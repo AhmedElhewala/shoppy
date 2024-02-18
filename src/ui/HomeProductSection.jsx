@@ -33,10 +33,10 @@ const StyledSectionHeadingLink = styled(Link)`
 const StyledProductsListContainer = styled.div`
   padding: 0.8rem;
   width: 100%;
-  overflow-x: auto;
   display: flex;
   gap: 1.5rem;
   position: relative;
+  overflow-x: auto;
 
   &::-webkit-scrollbar {
     width: 0;

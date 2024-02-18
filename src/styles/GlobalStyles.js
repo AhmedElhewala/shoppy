@@ -70,7 +70,7 @@ html {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Roboto', sans-serif;
   width: 100%;
   min-height: 100vh;
   font-size: 1.6rem;

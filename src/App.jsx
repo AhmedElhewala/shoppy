@@ -27,56 +27,41 @@ import { updateFullWatchlist } from "./features/watchlist/watchlistSlice";
 import Checkout from "./pages/Checkout";
 import useKeepAuthenticated from "./hooks/useKeepAuthenticated";
 import Profile from "./pages/Profile";
+import UserPanel from "./features/administration/UserPanel";
+import CategoryPanel from "./features/administration/CategoryPanel";
+import ProductPanel from "./features/administration/ProductPanel";
 
 
 const queryClient = new QueryClient();
 
 function App() {
   const user = useSelector(getUser);
-  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-
+  const [isLoading, setIsLoading] = useState(true);
   
+  useKeepAuthenticated();
+
   useEffect(() => {
     const stopLoading = () => {
-      setIsLoading(false)
+      setIsLoading(false);
     }
     window.addEventListener("load", stopLoading);
 
     return () => window.removeEventListener("load", stopLoading);
   }, []);
 
-  useKeepAuthenticated();
-  
   useEffect(() => {
     if (!user) {
       dispatch(updateFullCart([]));
-    } else {
-      const userId = user.id;
-      Object.keys(localStorage).map(key => {
-        if (key.includes("cart")) {
-          if (+key.split("-")[1] === userId) {
-            dispatch(updateFullCart(JSON.parse(localStorage.getItem(key))));
-          }
-        }
-      })
-    }
-  }, [user, dispatch])
-
-  useEffect(() => {
-    if (!user) {
       dispatch(updateFullWatchlist([]));
     } else {
       const userId = user.id;
-      Object.keys(localStorage).map(key => {
-        if (key.includes("watchlist")) {
-          if (+key.split("-")[1] === userId) {
-            dispatch(updateFullWatchlist(JSON.parse(localStorage.getItem(key))));
-          }
-        }
-      })
+      const cartData = localStorage.getItem(`cart-${userId}`);
+      const watchlistData = localStorage.getItem(`watchlist-${userId}`);
+      dispatch(updateFullCart(cartData ? JSON.parse(cartData) : []));
+      dispatch(updateFullWatchlist(watchlistData ? JSON.parse(watchlistData) : []));
     }
-  }, [user, dispatch])
+  }, [user, dispatch]);
 
   if (isLoading) return <Spinner />
 
@@ -88,13 +73,15 @@ function App() {
           <Routes>
             <Route 
               path="auth"
-              element={user ?
-                <Navigate replace to="/" /> :
+              element={
                 <Auth />
               }
             >
+              <Route
+                index
+                element={<Navigate to="login" replace />}
+              />
               <Route 
-                index 
                 path="login"
                 element={<LoginForm />} 
               />
@@ -120,7 +107,25 @@ function App() {
                   </ProtectedRoute>
                 </AppLayout>
               } 
-            />
+            >
+              <Route
+                index
+                element={<Navigate to="user" replace />}
+              />
+              <Route 
+                index 
+                path="user"
+                element={<UserPanel />}
+              />
+              <Route 
+                path="category"
+                element={<CategoryPanel />}
+              />
+              <Route 
+                path="product"
+                element={<ProductPanel />}
+              />
+            </Route>
             <Route 
               path="category"
               element={

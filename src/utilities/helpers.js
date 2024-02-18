@@ -14,6 +14,15 @@ export function formatDate(dateStr) {
   }).format(new Date(dateStr));
 }
 
+export function sliceWords(text, maxLength) {
+  const newText = text.split(" ");
+  if (newText.length <= maxLength) {
+    return text
+  } else {
+    return `${newText.slice(0, maxLength - 3).join(" ")}...`
+  }
+}
+
 // export function calcMinutesLeft(dateStr) {
 //   const d1 = new Date().getTime();
 //   const d2 = new Date(dateStr).getTime();
