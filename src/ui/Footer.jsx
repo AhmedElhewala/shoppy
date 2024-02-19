@@ -15,6 +15,7 @@ const StyledFooter = styled.footer`
   position: relative;
   box-shadow: 8px 0 4px 2px var(--color-grey-500);
   transition: var(--main-transition);
+  margin-top: 8rem;
 `
 
 const StyledFooterLogoContainer = styled.div`

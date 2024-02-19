@@ -6,14 +6,22 @@ import { useSearchParams } from "react-router-dom"
 import Spinner from "../../ui/Spinner"
 import Pagination from "../../ui/Pagination"
 import { PAGE_LIMIT } from "../../utilities/constants"
-import ProductRow from "../product/ProductRow"
-import { useEffect } from "react"
+import ProductRow from "./ProductRow"
 
 const StyledProductPanel = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 4rem;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+  &::-webkit-scrollbar-horizontal {
+    height: 0;
+  }
 `
 
 const StyledAddProduct = styled.span`
@@ -28,15 +36,8 @@ const StyledAddProduct = styled.span`
 
 function ProductPanel() {
   const {isLoading, products, count} = useProductList();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, ] = useSearchParams();
   const currentPage = Number(searchParams.get("page"));
-
-  useEffect(() => {
-    if (!searchParams.get("page")) {
-      searchParams.set("page", 1);
-      setSearchParams(searchParams);
-    }
-  }, [searchParams, setSearchParams])
 
   if (isLoading || !products) return <Spinner />
 
@@ -45,7 +46,7 @@ function ProductPanel() {
       <Filter />
 
       <Table
-        columns="0.6fr 1.8fr 3fr 1.2fr 1.2fr 2.4fr 1.2fr"
+        columns="4rem 12rem 20rem 12rem 12rem 16rem 16rem"
       >
         <Table.Header>
           <span>Id</span>

@@ -2,6 +2,9 @@ import styled from "styled-components"
 import Table from "../../ui/Table"
 import Spinner from "../../ui/Spinner"
 import useUser from "./useUser"
+import { useSearchParams } from "react-router-dom"
+import { PAGE_LIMIT } from "../../utilities/constants"
+import Pagination from "../../ui/Pagination"
 import UserRow from "./UserRow"
 
 const StyledUserPanel = styled.div`
@@ -9,18 +12,24 @@ const StyledUserPanel = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  margin-bottom: 5rem;
 `
 
 function UserPanel() {
   const {isLoading, users} = useUser();
-
-  if (isLoading) return <Spinner />
+  const [searchParams, ] = useSearchParams();
+  const currentPage = !searchParams.get("page")
+    ? 1
+    : Number(searchParams.get("page"));
+  const indexStart = (currentPage - 1) * PAGE_LIMIT;
+  
+  if (isLoading || !users) return <Spinner />
+  
+  const viewedUsers = users?.slice(indexStart, indexStart + PAGE_LIMIT);
 
   return (
     <StyledUserPanel>
       <Table
-        columns="0.6fr 1.2fr 1.2fr 2.4fr 1.2fr 1.2fr"
+        columns="6rem 18rem 18rem 24rem 12rem 18rem"
       >
         <Table.Header>
           <span>Id</span>
@@ -32,12 +41,19 @@ function UserPanel() {
         </Table.Header>
 
         <Table.Body 
-          data={users}
+          data={viewedUsers}
           render={(user) => (
             <UserRow user={user} key={user.id} />
           )}
         />
       </Table>
+
+      {users.length > PAGE_LIMIT &&
+        <Pagination 
+          count={users.length}
+          length={viewedUsers.length}
+        />
+      }
     </StyledUserPanel>
   )
 }

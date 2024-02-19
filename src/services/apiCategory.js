@@ -2,7 +2,7 @@ import axios  from "axios"
 import {BASE_URL} from "../utilities/constants"
 import { fetchCategoryProducts } from "./apiProduct";
 
-export async function fetchAllCategories() {
+export async function fetchValidCategories() {
   try {
     let validCategories = [];
     const req = await axios.get(`${BASE_URL}/categories`);
@@ -20,6 +20,16 @@ export async function fetchAllCategories() {
   }
 }
 
+export async function fetchAllCategories() {
+  try {
+    const req = await axios.get(`${BASE_URL}/categories`);
+
+    return req.data;
+  } catch (err) {
+    throw new Error(`Error fetching categories: ${err.message}`);
+  }
+}
+
 export async function isValidCategory(id) {
   try {
     const product = await fetchCategoryProducts(id);
@@ -27,5 +37,35 @@ export async function isValidCategory(id) {
   } catch (err) {
     if (err.code === "ERR_BAD_REQUEST") return null;
     throw new Error(`Error validating category: ${err.message}`);
+  }
+}
+
+export async function deleteCategory(id) {
+  try {
+    const req = await axios.delete(`${BASE_URL}/categories/${id}`);
+
+    return req.data;
+  } catch (err) {
+    throw new Error(`Error deleting category with id ${id}: ${err.message}`)
+  }
+}
+
+export async function addCategory(requestBody) {
+  try {
+    const req = await axios.post(`${BASE_URL}/categories/`, requestBody);
+
+    return req.data;
+  } catch (err) {
+    throw new Error(`Failed adding this category: ${err.message}`)
+  }
+}
+
+export async function updateCategory(id, requestBody) {
+  try {
+    const req = await axios.put(`${BASE_URL}/categories/${id}`, requestBody);
+
+    return req.data;
+  } catch (err) {
+    throw new Error(`Failed update category ${id}: ${err.message}`)
   }
 }

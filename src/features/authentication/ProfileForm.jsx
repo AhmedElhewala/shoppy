@@ -8,8 +8,8 @@ import toast from "react-hot-toast";
 import { HiCamera, HiEye, HiEyeOff, HiOutlineRefresh, HiPencilAlt, HiTrash, HiUser } from "react-icons/hi";
 import FormRowItem from "../../ui/FormRowItem";
 import { IMGBB_API_KEY } from "../../utilities/constants";
-import useUpdate from "./useUpdate"
 import Spinner from "../../ui/Spinner";
+import useUpdateUser from "./useUpdateUser";
 
 const StyledProfileForm = styled.form`
   width: 60%;
@@ -217,7 +217,7 @@ function ProfileForm() {
   const { errors } = formState;
   const user = useSelector(getUser);
   const avatarRef = useRef();
-  const {update} = useUpdate();
+  const {update} = useUpdateUser();
   const [isAvatarEditing, setIsAvatarEditing] = useState(false);
   const [isNameEditing, setIsNameEditing] = useState(false);
   const [isEmailEditing, setIsEmailEditing] = useState(false);

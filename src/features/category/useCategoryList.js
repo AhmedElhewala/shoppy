@@ -1,10 +1,10 @@
 import {useQuery} from "@tanstack/react-query"
-import { fetchAllCategories } from "../../services/apiCategory"
+import { fetchValidCategories } from "../../services/apiCategory"
 
 function useCategoryList() {
   const {isLoading, data: categories, error} = useQuery({
-    queryKey: ["categoryList"],
-    queryFn: fetchAllCategories,
+    queryKey: ["validCategoryList"],
+    queryFn: fetchValidCategories,
     retry: false,
   })
 

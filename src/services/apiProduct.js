@@ -100,3 +100,13 @@ export async function getSearchProductsCount(title, categoryId) {
     throw new Error(`Error fetching products: ${err.message}`);
   }
 }
+
+export async function deleteProduct(id) {
+  try {
+    const req = await axios.delete(`${BASE_URL}/products/${id}`);
+
+    return req.data;
+  } catch (err) {
+    throw new Error(`Error deleting product with id ${id}: ${err.message}`)
+  }
+}

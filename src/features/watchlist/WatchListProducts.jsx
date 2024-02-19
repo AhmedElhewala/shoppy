@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { clearWatchlist, getTotalWatchlistQuantity, getWatchlist } from "../watchlist/watchlistSlice";
 import EmptyWatchList from "./EmptyWatchList"
 import ProductItemMini from "../product/ProductItemMini";
-import ClearButton from "../../ui/ClearButton";
+import DeleteButton from "../../ui/DeleteButton";
 
 const StyledWatchListProductContainer = styled.div`
   width: 100%;
@@ -53,8 +53,10 @@ function WatchListProducts() {
           You have <span>{watchListQuantity}</span> product{watchListQuantity > 1 ? "s" : ""} in your watch list.
         </StyledWatchListHeading>
         {watchListQuantity > 0 &&
-          <ClearButton 
-            clear={clearWatchlist}
+          <DeleteButton
+            withDispatch={true}
+            handler={clearWatchlist}
+            title="Clear list"
           />
         }
       </StyledWatchListHeaderContainer>

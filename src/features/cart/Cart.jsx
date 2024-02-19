@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { clearCart, getCart, getTotalCartPrice, getTotalCartQuantity } from "./cartSlice";
 import EmptyCart from "./EmptyCart";
 import CartItem from "./CartItem";
-import ClearButton from "../../ui/ClearButton";
+import DeleteButton from "../../ui/DeleteButton";
 
 const StyledCartContainer = styled.div`
   width: 60%;
@@ -142,8 +142,10 @@ function Cart({closeShoppingCart}) {
       <CartHeader>
         <span>Cart Summry</span>
         {cartQuantity > 0 &&
-          <ClearButton 
-            clear={clearCart}
+          <DeleteButton 
+            withDispatch={true}
+            handler={clearCart}
+            title="Clear cart"
           />
         }
         </CartHeader>

@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import Table from "../../ui/Table";
-import { HiPencil, HiTrash } from "react-icons/hi";
+import { HiPencil } from "react-icons/hi";
+import DeleteButton from "../../ui/DeleteButton";
+import useDeleteCategory from "./useDeleteCategory";
+import { useState } from "react";
+import CategoryForm from "./categoryForm";
 
 const StyledId = styled.span`
   font-weight: bold;
@@ -19,14 +23,15 @@ const StyledImg = styled.img`
 const StyledOperationsContainer = styled.span`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   position: relative;
 `
 
 const StyledOperationBtn = styled.span`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 0.8rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.7rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -39,44 +44,62 @@ const StyledOperationBtn = styled.span`
     box-shadow: 0 0 4px 2px var(--color-grey-500) inset;
   }
 
-  &.delete {
-    background-color: var(--color-btn-red);
-    color: #efefef;
-    box-shadow: 0 0 4px 2px var(--shadow-btn-red);
-  }
-
   >svg {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 `
 
 function CategoryRow({ category }) {
   const {id, name, image} = category;
+  const {deleteCategory} = useDeleteCategory();
+  const [isEditing, setIsEditing] = useState(false);
+  
+  function handleStartEditing() {
+    setIsEditing(true);
+  }
+  
+  
+  function handleEndEditing() {
+    setIsEditing(false);
+  }
+
+  function handleDelete() {
+    deleteCategory(id);
+  }
 
   return (
-    <Table.Row>
-      <StyledId>{id}</StyledId>
-      <StyledName>{name}</StyledName>
-      <StyledImg 
-        src={image}
-        alt={name}
-      />
-      <StyledOperationsContainer
-      >
-        <StyledOperationBtn 
-          className="edit"
-          title="Edit"
+    <>
+      <Table.Row>
+        <StyledId>{id}</StyledId>
+        <StyledName>{name}</StyledName>
+        <StyledImg 
+          src={image}
+          alt={name}
+        />
+        <StyledOperationsContainer
         >
-          <HiPencil />
-        </StyledOperationBtn>
-        <StyledOperationBtn 
-          className="delete"
-          title="Delete"
-        >
-          <HiTrash />
-        </StyledOperationBtn>
-      </StyledOperationsContainer>
-    </Table.Row>
+          <StyledOperationBtn 
+            className="edit"
+            title="Edit"
+            onClick={handleStartEditing}
+          >
+            <HiPencil />
+          </StyledOperationBtn>
+          <DeleteButton 
+            title="Delete category"
+            handler={handleDelete}
+            withDispatch={false}
+          />
+        </StyledOperationsContainer>
+      </Table.Row>
+      {isEditing &&
+        <CategoryForm 
+          category={category}
+          close={handleEndEditing}
+          isOpen={isEditing}
+        />
+      }
+    </>
   )
 }
 

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from './userSlice';
 import toast from "react-hot-toast";
 
-function useLogin(){
+function useUpdateUser(){
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
@@ -20,11 +20,14 @@ function useLogin(){
     },
 
     onError: (err) => {
-      throw new Error('login error', err);
+      toast.error(
+        "Faild to update! Please try Again after check if you did anything wrong"
+      );
+      throw new Error('Update error', err);
     },
   })
 
   return {isLoading, update, error}
 }
 
-export default useLogin;
+export default useUpdateUser;

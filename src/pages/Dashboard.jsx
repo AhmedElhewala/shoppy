@@ -1,5 +1,6 @@
 import styled from "styled-components"
-import { Outlet } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
+import { useEffect } from "react";
 
 
 const StyledDashboardContainer = styled.div`
@@ -13,6 +14,14 @@ const StyledDashboardContainer = styled.div`
 `
 
 function Dashboard() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  useEffect(() => {
+    if (!searchParams.get("page")) {
+      searchParams.set("page", 1);
+      setSearchParams(searchParams);
+    }
+  }, [searchParams, setSearchParams])
 
   return (
     <StyledDashboardContainer>

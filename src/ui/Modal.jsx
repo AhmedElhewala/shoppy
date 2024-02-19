@@ -9,6 +9,15 @@ const ModalWindow = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+  &::-webkit-scrollbar-horizontal {
+    height: 0;
+  }
 `
 
 function Modal({children}) {

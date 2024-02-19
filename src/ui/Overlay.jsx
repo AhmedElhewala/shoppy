@@ -9,7 +9,7 @@ const StyledOverlay = styled.div`
   left: 0;
   background-color: var(--overlay-background);
   backdrop-filter: blur(4px);
-  z-index: 1000000000;
+  z-index: 99999;
 `
 
 function Overlay({children}) {

@@ -21,3 +21,13 @@ export async function getUsersCount() {
     throw new Error(`Error fetching users: ${err.message}`);
   }
 }
+
+export async function updateRole(id, requestBody) {
+  try {
+    const req = await axios.put(`${BASE_URL}/users/${id}`, requestBody);
+
+    return req.data;
+  } catch (err) {
+    throw new Error(`Error updating this user role: ${err.message}`)
+  }
+}

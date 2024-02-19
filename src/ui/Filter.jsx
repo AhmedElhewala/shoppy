@@ -3,15 +3,40 @@ import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import useCategoryList from "../features/category/useCategoryList";
 import toast from "react-hot-toast";
+import { HiAdjustments } from "react-icons/hi";
 
 const StyledFilterContainer = styled.div`
   width: 100%;
   display: flex;
+  align-items: start;
+  gap: 2rem;
+`
+
+const StyledFilterButton = styled.span`
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 2.5rem;
+  transition: var(--main-transition);
+  cursor: pointer;
+
+  >svg {
+    font-size: 2.6rem;
+    transform: rotate(90deg);
+  }
+`
+
+const StyledFilterBoxesContainer = styled.div`
+  flex: 1;
+  display: flex;
   align-items: end;
   flex-wrap: wrap;
   gap: 2rem;
-  margin-bottom: 2rem;
   justify-content: center;
+  transition: var(--main-transition);
 `
 
 const StyledFilterBox = styled.div`
@@ -19,8 +44,13 @@ const StyledFilterBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  transition: var(--main-transition);
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+
+  @media (min-width: 481px) and (max-width: 767px) {
     width: 45%;
   }
 `
@@ -70,7 +100,11 @@ const StyledFilterOperationBtn = styled.button`
   cursor: pointer;
 
   
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+
+  @media (min-width: 481px) and (max-width: 767px) {
     width: 20%;
   }
 `
@@ -103,6 +137,11 @@ function Filter() {
   const [title, setTitle] = useState(titleParam);
   const [category, setCategory] = useState(categoryIdParam);
   const {categories} = useCategoryList();
+  const [showFilter, setShowFilter] = useState(false);
+
+  function handleShowFilter() {
+    setShowFilter(show => !show);
+  }
 
   function handlePrice(e) {
     setPrice(e.target.value);
@@ -184,95 +223,106 @@ function Filter() {
 
   return (
     <StyledFilterContainer>
-      <StyledFilterBox>
-        <StyledFilterLabel htmlFor="price">
-          Price
-        </StyledFilterLabel>
-        <StyledPriceInput 
-          type="number"
-          id="price"
-          value={price}
-          onChange={handlePrice}
-          placeholder="Price"
-        />
-      </StyledFilterBox>
-
-      <StyledFilterBox>
-        <StyledFilterLabel htmlFor="priceMin">
-          Minimum price
-        </StyledFilterLabel>
-        <StyledPriceInput 
-          type="number"
-          id="priceMin"
-          value={priceMin}
-          onChange={handlePriceMin}
-          placeholder="Minimum price"
-        />
-      </StyledFilterBox>
-
-      <StyledFilterBox>
-        <StyledFilterLabel htmlFor="priceMax">
-          Maximum price
-        </StyledFilterLabel>
-        <StyledPriceInput 
-          type="number"
-          id="priceMax"
-          value={priceMax}
-          onChange={handlePriceMax}
-          placeholder="Maximum price"
-        />
-      </StyledFilterBox>
-
-      <StyledFilterBox>
-        <StyledFilterLabel htmlFor="title">
-          Title
-        </StyledFilterLabel>
-        <StyledPriceInput 
-          type="text"
-          id="title"
-          value={title}
-          onChange={handleTitle}
-          placeholder="Title"
-        />
-      </StyledFilterBox>
-
-      <StyledFilterBox>
-        <StyledFilterLabel htmlFor="category">
-          Category
-        </StyledFilterLabel>
-        <StyledCategoryInput
-          id="category"
-          name="category"
-          value={category}
-          onChange={handleCategoryChange}
-        >
-          <optgroup label="Category">
-            <StyledCategoryOption value="" key="all">All</StyledCategoryOption>
-            {categories && categories.length > 0 &&
-              categories.map(category => (
-                <StyledCategoryOption
-                  value={category.id}
-                  key={category.id}
-                >
-                  {category.name}
-                </StyledCategoryOption>
-              ))
-            }
-          </optgroup>
-        </StyledCategoryInput>
-      </StyledFilterBox>
-
-      <StyledFilterOperationBtn
-        onClick={handleApplyFilter}
+      <StyledFilterButton
+        onClick={handleShowFilter}
       >
-        Apply
-      </StyledFilterOperationBtn>
+        <HiAdjustments />
+      </StyledFilterButton>
+      <StyledFilterBoxesContainer>
+        {showFilter &&
+          <>
+            <StyledFilterBox>
+              <StyledFilterLabel htmlFor="price">
+                Price
+              </StyledFilterLabel>
+              <StyledPriceInput 
+                type="number"
+                id="price"
+                value={price}
+                onChange={handlePrice}
+                placeholder="Price"
+              />
+            </StyledFilterBox>
 
-      <StyledFilterOperationBtn
-        onClick={handleClearFilter}
-      >
-        Clear
-      </StyledFilterOperationBtn>
+            <StyledFilterBox>
+              <StyledFilterLabel htmlFor="priceMin">
+                Minimum price
+              </StyledFilterLabel>
+              <StyledPriceInput 
+                type="number"
+                id="priceMin"
+                value={priceMin}
+                onChange={handlePriceMin}
+                placeholder="Minimum price"
+              />
+            </StyledFilterBox>
+
+            <StyledFilterBox>
+              <StyledFilterLabel htmlFor="priceMax">
+                Maximum price
+              </StyledFilterLabel>
+              <StyledPriceInput 
+                type="number"
+                id="priceMax"
+                value={priceMax}
+                onChange={handlePriceMax}
+                placeholder="Maximum price"
+              />
+            </StyledFilterBox>
+
+            <StyledFilterBox>
+              <StyledFilterLabel htmlFor="title">
+                Title
+              </StyledFilterLabel>
+              <StyledPriceInput 
+                type="text"
+                id="title"
+                value={title}
+                onChange={handleTitle}
+                placeholder="Title"
+              />
+            </StyledFilterBox>
+
+            <StyledFilterBox>
+              <StyledFilterLabel htmlFor="category">
+                Category
+              </StyledFilterLabel>
+              <StyledCategoryInput
+                id="category"
+                name="category"
+                value={category}
+                onChange={handleCategoryChange}
+              >
+                <optgroup label="Category">
+                  <StyledCategoryOption value="" key="all">All</StyledCategoryOption>
+                  {categories && categories.length > 0 &&
+                    categories.map(category => (
+                      <StyledCategoryOption
+                        value={category.id}
+                        key={category.id}
+                      >
+                        {category.name}
+                      </StyledCategoryOption>
+                    ))
+                  }
+                </optgroup>
+              </StyledCategoryInput>
+            </StyledFilterBox>
+
+            <StyledFilterOperationBtn
+              onClick={handleApplyFilter}
+            >
+              Apply
+            </StyledFilterOperationBtn>
+
+            <StyledFilterOperationBtn
+              onClick={handleClearFilter}
+            >
+              Clear
+            </StyledFilterOperationBtn>
+          </>
+        }
+      </StyledFilterBoxesContainer>
   </StyledFilterContainer>
   )
 }

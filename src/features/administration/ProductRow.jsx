@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import Table from "../../ui/Table";
 import { formatCurrency, sliceWords } from "../../utilities/helpers";
-import { HiPencil, HiPlusSm, HiTrash } from "react-icons/hi";
+import { HiPencil, HiPlusSm } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import DeleteButton from "../../ui/DeleteButton";
+import useDeleteProduct from "./useDeleteProduct";
 
 const StyledId = styled.span`
   font-weight: bold;
@@ -39,9 +41,9 @@ const StyledImg = styled.img`
 `
 
 const StyledAddImg = styled.span`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 0.8rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,21 +54,22 @@ const StyledAddImg = styled.span`
   cursor: pointer;
 
   >svg {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 `
 
 const StyledOperationsContainer = styled.span`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   position: relative;
 `
 
 const StyledOperationBtn = styled.span`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 0.8rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.7rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -79,19 +82,31 @@ const StyledOperationBtn = styled.span`
     box-shadow: 0 0 4px 2px var(--color-grey-500) inset;
   }
 
-  &.delete {
+  &.delete,
+  &.confirm {
     background-color: var(--color-btn-red);
     color: #efefef;
     box-shadow: 0 0 4px 2px var(--shadow-btn-red);
   }
+  
+  &.cancel {
+    background-color: var(--color-btn-green);
+    color: #efefef;
+    box-shadow: var(--shadow-btn-green);
+  }
 
   >svg {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 `
 
 function ProductRow({ product }) {
   const {id, title, description, images, category, price} = product;
+  const {deleteProduct} = useDeleteProduct();
+
+  function handleDelete() {
+    deleteProduct(id);
+  }
 
   return (
     <Table.Row>
@@ -122,12 +137,11 @@ function ProductRow({ product }) {
         >
           <HiPencil />
         </StyledOperationBtn>
-        <StyledOperationBtn 
-          className="delete"
-          title="Delete"
-        >
-          <HiTrash />
-        </StyledOperationBtn>
+        <DeleteButton 
+          title="Delete product"
+          handler={handleDelete}
+          withDispatch={false}
+        />
       </StyledOperationsContainer>
     </Table.Row>
   )
