@@ -63,7 +63,7 @@ function CategoryPanel() {
   return (
     <StyledCategoryPanel>
       <Table
-        columns="10rem 30rem 30rem 15rem"
+        columns="10rem 30rem 30rem 20rem"
       >
         <Table.Header>
           <span>Id</span>

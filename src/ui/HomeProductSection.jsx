@@ -87,17 +87,8 @@ function HomeProductSection({category}) {
   const productsContainerRef = useRef();
 
   const handleWheel = (e) => {
-    e.preventDefault();
     e.stopPropagation();
     productsContainerRef.current.scrollLeft += e.deltaY;
-  };
-
-  const handleMouseEnter = () => {
-    window.addEventListener("wheel", handleWheel, { passive: false });
-  };
-
-  const handleMouseLeave = () => {
-    window.removeEventListener("wheel", handleWheel);
   };
 
   return (
@@ -107,8 +98,7 @@ function HomeProductSection({category}) {
         <HiChevronRight />
       </StyledSectionHeadingLink>
       <StyledProductsListContainer
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onWheel={handleWheel}
         ref={productsContainerRef}
       >
         {count > 0 &&

@@ -110,3 +110,23 @@ export async function deleteProduct(id) {
     throw new Error(`Error deleting product with id ${id}: ${err.message}`)
   }
 }
+
+export async function addProduct(requestBody) {
+  try {
+    const req = await axios.post(`${BASE_URL}/products/`, requestBody);
+
+    return req.data;
+  } catch (err) {
+    throw new Error(`Failed adding this product: ${err.message}`)
+  }
+}
+
+export async function updateProduct(id, requestBody) {
+  try {
+    const req = await axios.put(`${BASE_URL}/products/${id}`, requestBody);
+
+    return req.data;
+  } catch (err) {
+    throw new Error(`Failed update product ${id}: ${err.message}`)
+  }
+}

@@ -7,7 +7,7 @@ import  axios  from "axios"
 import { IMGBB_API_KEY } from "../../utilities/constants";
 import useModalEffects from "../../hooks/useModalEffects";
 import useAddCategory from "./useAddCategory";
-import useUpdateCategory from "./useUpdateCategory"
+import useUpdateCategory from "./useUpdateCategory";
 
 const StyledCategoryFormContainer = styled.div`
   padding: 4rem 2rem;
@@ -16,10 +16,12 @@ const StyledCategoryFormContainer = styled.div`
   flex-direction: column;
   gap: 4rem;
   align-items: center;
-  overflow-y: auto;
 `
 
 const StyledHeading = styled.h2`
+  color: #efefef;
+  filter: drop-shadow(0 0 1px #333);
+  
   @media screen and (max-width: 767px) {
     margin-top: 2rem;
   }
@@ -281,7 +283,7 @@ function CategoryForm({ category, close, isOpen }) {
           <StyledCategoryImageContainer>
             <StyledImageInput 
               type="file"
-              name="name"
+              name="image"
               accept="image/*"
               onChange={handleImageChange}
               ref={imageRef}

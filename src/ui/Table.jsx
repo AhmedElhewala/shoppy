@@ -13,7 +13,7 @@ const StyledTable = styled.div`
   overflow-x: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -65,25 +65,24 @@ function Table({columns, children}) {
   const tableRef = useRef();
 
   const handleWheel = (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     tableRef.current.scrollLeft += e.deltaY;
     
   };
 
-  const handleMouseEnter = () => {
-    window.addEventListener("wheel", handleWheel, { passive: false });
-  };
+  // const handleMouseEnter = () => {
+  //   window.addEventListener("wheel", handleWheel, { passive: false });
+  // };
 
-  const handleMouseLeave = () => {
-    window.removeEventListener("wheel", handleWheel);
-  };
+  // const handleMouseLeave = () => {
+  //   window.removeEventListener("wheel", handleWheel);
+  // };
   return (
     <TableContext.Provider value={{ columns }}>
       <StyledTable
         role="table"
         ref={tableRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onWheel={handleWheel}
       >
         {children}
       </StyledTable>

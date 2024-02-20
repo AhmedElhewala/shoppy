@@ -7,6 +7,8 @@ import Spinner from "../../ui/Spinner"
 import Pagination from "../../ui/Pagination"
 import { PAGE_LIMIT } from "../../utilities/constants"
 import ProductRow from "./ProductRow"
+import ProductForm from "./ProductForm"
+import { useState } from "react"
 
 const StyledProductPanel = styled.div`
   width: 100%;
@@ -24,20 +26,33 @@ const StyledProductPanel = styled.div`
   }
 `
 
-const StyledAddProduct = styled.span`
-  padding: 6px 12px;
+const StyledAddProduct = styled.button`
+  width: fit-content;
+  padding: 6px 20px;
   border-radius: 6px;
+  border: none;
+  outline: none;
   background-color: var(--color-btn-green);
   color: #efefef;
   box-shadow: var(--shadow-btn-green);
   text-align: center;
   font-size: 1.4rem;
+  cursor: pointer;
 `
 
 function ProductPanel() {
   const {isLoading, products, count} = useProductList();
   const [searchParams, ] = useSearchParams();
   const currentPage = Number(searchParams.get("page"));
+  const [isAdding, setIsAdding] = useState(false);
+
+  function handleStartAdding() {
+    setIsAdding(true);
+  }
+  
+  function handleEndAdding() {
+    setIsAdding(false);
+  }
 
   if (isLoading || !products) return <Spinner />
 
@@ -57,6 +72,7 @@ function ProductPanel() {
           <span>Images</span>
           <StyledAddProduct
             title="Add Product"
+            onClick={handleStartAdding}
           >
             Add product
           </StyledAddProduct>
@@ -76,6 +92,12 @@ function ProductPanel() {
           count={count}
         />
       )}
+      {isAdding &&
+        <ProductForm 
+          close={handleEndAdding}
+          isOpen={isAdding}
+        />
+      }
     </StyledProductPanel>
   )
 }

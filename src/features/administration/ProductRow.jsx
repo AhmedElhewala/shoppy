@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import Table from "../../ui/Table";
 import { formatCurrency, sliceWords } from "../../utilities/helpers";
-import { HiPencil, HiPlusSm } from "react-icons/hi";
+import { HiPencil } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import DeleteButton from "../../ui/DeleteButton";
 import useDeleteProduct from "./useDeleteProduct";
+import ProductForm from "./ProductForm";
+import { useState } from "react";
 
 const StyledId = styled.span`
   font-weight: bold;
@@ -38,24 +40,6 @@ const StyledImg = styled.img`
   width: 4rem;
   height: 4rem;
   border-radius: 1rem;
-`
-
-const StyledAddImg = styled.span`
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 0.7rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background-color: var(--color-grey-300);
-  color: var(--color-grey-800);
-  box-shadow: 0 0 2px 1px var(--color-grey-500);
-  cursor: pointer;
-
-  >svg {
-    font-size: 1.8rem;
-  }
 `
 
 const StyledOperationsContainer = styled.span`
@@ -103,47 +87,61 @@ const StyledOperationBtn = styled.span`
 function ProductRow({ product }) {
   const {id, title, description, images, category, price} = product;
   const {deleteProduct} = useDeleteProduct();
+  const [isEditing, setIsEditing] = useState(false);
+  
+  function handleStartEditing() {
+    setIsEditing(true);
+  }
+  
+  function handleEndEditing() {
+    setIsEditing(false);
+  }
 
   function handleDelete() {
     deleteProduct(id);
   }
 
   return (
-    <Table.Row>
-      <StyledId>{id}</StyledId>
-      <StyledTitle>{title}</StyledTitle>
-      <StyledDescreption>{sliceWords(description, 20)}</StyledDescreption>
-      <StyledCategory>{category.name}</StyledCategory>
-      <StyledPrice>{formatCurrency(price)}</StyledPrice>
-      <StyledImagesContainer>
-        {images.map(image => (
-          <StyledImg 
-            src={image}
-            alt={title}
-            key={image}
+    <>
+      <Table.Row>
+        <StyledId>{id}</StyledId>
+        <StyledTitle>{title}</StyledTitle>
+        <StyledDescreption>{sliceWords(description, 20)}</StyledDescreption>
+        <StyledCategory>{category.name}</StyledCategory>
+        <StyledPrice>{formatCurrency(price)}</StyledPrice>
+        <StyledImagesContainer>
+          {images.map(image => (
+            <StyledImg 
+              src={image}
+              alt={title}
+              key={image}
+            />
+          ))}
+        </StyledImagesContainer>
+        <StyledOperationsContainer
+        >
+          <StyledOperationBtn 
+            className="edit"
+            title="Edit"
+            onClick={handleStartEditing}
+          >
+            <HiPencil />
+          </StyledOperationBtn>
+          <DeleteButton 
+            title="Delete product"
+            handler={handleDelete}
+            withDispatch={false}
           />
-        ))}
-        <StyledAddImg
-          title="Add Image"
-        >
-          <HiPlusSm />
-        </StyledAddImg>
-      </StyledImagesContainer>
-      <StyledOperationsContainer
-      >
-        <StyledOperationBtn 
-          className="edit"
-          title="Edit"
-        >
-          <HiPencil />
-        </StyledOperationBtn>
-        <DeleteButton 
-          title="Delete product"
-          handler={handleDelete}
-          withDispatch={false}
+        </StyledOperationsContainer>
+      </Table.Row>
+      {isEditing &&
+        <ProductForm 
+          product={product}
+          close={handleEndEditing}
+          isOpen={isEditing}
         />
-      </StyledOperationsContainer>
-    </Table.Row>
+      }
+    </>
   )
 }
 

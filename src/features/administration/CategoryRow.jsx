@@ -58,7 +58,6 @@ function CategoryRow({ category }) {
     setIsEditing(true);
   }
   
-  
   function handleEndEditing() {
     setIsEditing(false);
   }
