@@ -55,12 +55,11 @@ const StyledFilterBox = styled.div`
   }
 `
 
-
 const StyledFilterLabel = styled.label`
   font-size: 1.4rem;
 `
 
-const StyledPriceInput = styled.input`
+const StyledInput = styled.input`
   max-width: 100%;
   padding: 6px 12px;
   border-radius: 6px;
@@ -72,6 +71,7 @@ const StyledPriceInput = styled.input`
 `
 
 const StyledCategoryInput = styled.select`
+  width: 100%;
   padding: 6px 12px;
   border-radius: 6px;
   outline: none;
@@ -129,15 +129,15 @@ function Filter() {
 
   const categoryIdParam = !searchParams.get("categoryId")
   ? ""
-  : searchParams.get("categoryId");
+  : Number(searchParams.get("categoryId"));
 
+  const [showFilter, setShowFilter] = useState(false);
   const [price, setPrice] = useState(priceParam);
   const [priceMin, setPriceMin] = useState(priceMinParam);
   const [priceMax, setPriceMax] = useState(priceMaxParam);
   const [title, setTitle] = useState(titleParam);
   const [category, setCategory] = useState(categoryIdParam);
   const {categories} = useCategoryList();
-  const [showFilter, setShowFilter] = useState(false);
 
   function handleShowFilter() {
     setShowFilter(show => !show);
@@ -167,7 +167,6 @@ function Filter() {
     setSearchParams(searchParams);
   }
 
-  
   function handleApplyParam(param, value) {
     searchParams.set(param, value);
     searchParams.set("page", 1);
@@ -235,7 +234,7 @@ function Filter() {
               <StyledFilterLabel htmlFor="price">
                 Price
               </StyledFilterLabel>
-              <StyledPriceInput 
+              <StyledInput 
                 type="number"
                 id="price"
                 value={price}
@@ -248,7 +247,7 @@ function Filter() {
               <StyledFilterLabel htmlFor="priceMin">
                 Minimum price
               </StyledFilterLabel>
-              <StyledPriceInput 
+              <StyledInput 
                 type="number"
                 id="priceMin"
                 value={priceMin}
@@ -261,7 +260,7 @@ function Filter() {
               <StyledFilterLabel htmlFor="priceMax">
                 Maximum price
               </StyledFilterLabel>
-              <StyledPriceInput 
+              <StyledInput 
                 type="number"
                 id="priceMax"
                 value={priceMax}
@@ -274,7 +273,7 @@ function Filter() {
               <StyledFilterLabel htmlFor="title">
                 Title
               </StyledFilterLabel>
-              <StyledPriceInput 
+              <StyledInput 
                 type="text"
                 id="title"
                 value={title}

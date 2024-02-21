@@ -57,6 +57,7 @@ const StyledEmpty = styled.p`
   align-items: center;
   gap: 4rem;
   position: relative;
+  margin-top: 2rem;
 `
 
 const TableContext = createContext();
@@ -124,7 +125,7 @@ function Body({data, render}) {
         {data.map(render)}
       </StyledBody> :
       <StyledEmpty>
-        No data to show at the moment
+        There is no data to show
       </StyledEmpty>
   )
 }

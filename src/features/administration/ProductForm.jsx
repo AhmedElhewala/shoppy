@@ -445,6 +445,11 @@ function ProductForm({ product, isOpen, close }) {
                 // disabled={isFormLoading}
                 onChange={handleCategoryChange}
               >
+                <StyledSelectCategoryOption
+                  key="empty"
+                  value=""
+                  disabled
+                ></StyledSelectCategoryOption>
                 {categories.map(category => (
                   <StyledSelectCategoryOption
                     key={category.id}
@@ -485,6 +490,7 @@ function ProductForm({ product, isOpen, close }) {
 
           <StyledButton
             className="close"
+            onClick={close}
           >
             Cancel
           </StyledButton>
