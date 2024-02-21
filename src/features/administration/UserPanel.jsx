@@ -35,29 +35,30 @@ function UserPanel() {
   : searchParams.get("role");
 
   const indexStart = (currentPage - 1) * PAGE_LIMIT;
-  let viewedUsers = [];
+  let viewedUsers = users;
+  let filteredUsers = users;
   
   if (isLoading || !users) return <Spinner />
 
-  viewedUsers = users?.slice(indexStart, indexStart + PAGE_LIMIT);
   
   if (idParam) {
-    viewedUsers = users?.filter(user => user.id === idParam);
+    filteredUsers = users?.filter(user => user.id === idParam);
   }
   
   if (nameParam) {
-    viewedUsers = users?.filter(user => user.name.includes(nameParam));
+    filteredUsers = users?.filter(user => user.name.includes(nameParam));
   }
   
   if (emailParam) {
-    viewedUsers = users?.filter(user => user.email.includes(emailParam));
+    filteredUsers = users?.filter(user => user.email.includes(emailParam));
   }
-
+  
   if (roleParam) {
-    viewedUsers = users?.filter(user => user.role === roleParam);
+    filteredUsers = users?.filter(user => user.role === roleParam);
   }
-
-
+  
+  viewedUsers = filteredUsers?.slice(indexStart, indexStart + PAGE_LIMIT);
+  
   return (
     <StyledUserPanel>
       <UserFilter />
@@ -81,9 +82,9 @@ function UserPanel() {
         />
       </Table>
 
-      {viewedUsers.length > PAGE_LIMIT &&
+      {filteredUsers.length > PAGE_LIMIT && 
         <Pagination 
-          count={users.length}
+          count={filteredUsers.length}
           length={viewedUsers.length}
         />
       }
