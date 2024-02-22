@@ -84,7 +84,7 @@ function Auth() {
     if (user) {
       navigate(-1 || "/", {replace: true})
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <StyledAuth>

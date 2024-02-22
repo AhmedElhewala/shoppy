@@ -144,8 +144,10 @@ function LoginForm() {
     login(
       {email, password, isRemmbered: isChecked}, 
       {onSettled: () => {
-        navigate("/", { replace: true });
         setIsFormLoading(false);
+      }},
+      {onSuccess: () => {
+        navigate("/", { replace: true });
       }}
     );
   }
