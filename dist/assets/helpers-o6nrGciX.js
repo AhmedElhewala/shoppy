@@ -1,1 +1,0 @@
-function t(e){return new Intl.NumberFormat("en",{style:"currency",currency:"USD"}).format(e)}function o(e){return new Intl.DateTimeFormat("en",{weekday:"long",day:"numeric",month:"short",year:"numeric"}).format(new Date(e))}function a(e,n){const r=e.split(" ");return r.length<=n?e:`${r.slice(0,n-3).join(" ")}...`}export{o as a,t as f,a as s};
