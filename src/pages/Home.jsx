@@ -1,4 +1,3 @@
-import { HiHeart } from "react-icons/hi"
 import styled from "styled-components"
 import useCategoryList from "../features/category/useCategoryList";
 import HomeProductSection from "../ui/HomeProductSection";
@@ -46,7 +45,7 @@ function Home() {
 
   return (
     <StyledHomeMainContainer>
-      <HomeMainHeading>Shop at home, hope you find your needs <HiHeart /></HomeMainHeading>
+      <HomeMainHeading>Shop at home, hope you find your needs ❤</HomeMainHeading>
       {categories?.length > 0 &&
         categories.map(category => (
           <HomeProductSection 

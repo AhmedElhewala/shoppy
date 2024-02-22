@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { HiHeart } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useThemeMode } from "../context/ThemeContext";
 import logoLightPath from "/logo-light.png";
@@ -246,7 +245,7 @@ function Footer() {
       </StyledSocialLinksContainer>
 
       <StyledCopyright>
-        Copyright &copy; 2024, Shoppy. Made with <HiHeart />
+        Copyright &copy; 2024, Shoppy. Designed by Ahmed Abd El-Ghany.
       </StyledCopyright>
     </StyledFooter>
   )
