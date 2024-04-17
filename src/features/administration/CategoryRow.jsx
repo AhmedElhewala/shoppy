@@ -4,7 +4,7 @@ import { HiPencil } from "react-icons/hi";
 import DeleteButton from "../../ui/DeleteButton";
 import useDeleteCategory from "./useDeleteCategory";
 import { useState } from "react";
-import CategoryForm from "./categoryForm";
+import CategoryForm from "./CategoryForm";
 
 const StyledId = styled.span`
   font-weight: bold;
