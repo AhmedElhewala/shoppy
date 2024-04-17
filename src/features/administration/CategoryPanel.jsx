@@ -7,7 +7,7 @@ import { PAGE_LIMIT } from "../../utilities/constants"
 import Pagination from "../../ui/Pagination"
 import CategoryRow from "./CategoryRow"
 import { useState } from "react"
-import CategoryForm from "./categoryForm"
+import CategoryForm from "./CategoryForm"
 
 const StyledCategoryPanel = styled.div`
   width: 100%;
