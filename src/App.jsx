@@ -2,8 +2,13 @@ import { useEffect, Suspense, lazy } from "react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ThemeProvider } from "./context/ThemeContext";
 import { useDispatch } from "react-redux";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import {Toaster} from "react-hot-toast"
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import GlobalStyles from "./styles/GlobalStyles";
 import { useSelector } from "react-redux";
 import { getUser } from "./features/authentication/userSlice";
@@ -21,17 +26,26 @@ const Checkout = lazy(() => import("./pages/Checkout"));
 const Profile = lazy(() => import("./pages/Profile"));
 const AppLayout = lazy(() => import("./ui/AppLayout"));
 const Spinner = lazy(() => import("./ui/Spinner"));
-const ProtectedRoute = lazy(() => import("./features/authorization/ProtectedRoute"));
+const ProtectedRoute = lazy(() =>
+  import("./features/authorization/ProtectedRoute")
+);
 const LoginForm = lazy(() => import("./features/authentication/LoginForm"));
-const RegisterForm = lazy(() => import("./features/authentication/RegisterForm"));
-const CategoryProductList = lazy(() => import("./features/category/CategoryProductList"));
+const RegisterForm = lazy(() =>
+  import("./features/authentication/RegisterForm")
+);
+const CategoryProductList = lazy(() =>
+  import("./features/category/CategoryProductList")
+);
 const UserPanel = lazy(() => import("./features/administration/UserPanel"));
-const CategoryPanel = lazy(() => import("./features/administration/CategoryPanel"));
-const ProductPanel = lazy(() => import("./features/administration/ProductPanel"));
+const CategoryPanel = lazy(() =>
+  import("./features/administration/CategoryPanel")
+);
+const ProductPanel = lazy(() =>
+  import("./features/administration/ProductPanel")
+);
 
 import { updateFullCart } from "./features/cart/cartSlice";
 import { updateFullWatchlist } from "./features/watchlist/watchlistSlice";
-
 
 const queryClient = new QueryClient();
 
@@ -49,7 +63,9 @@ function App() {
       const cartData = localStorage.getItem(`cart-${userId}`);
       const watchlistData = localStorage.getItem(`watchlist-${userId}`);
       dispatch(updateFullCart(cartData ? JSON.parse(cartData) : []));
-      dispatch(updateFullWatchlist(watchlistData ? JSON.parse(watchlistData) : []));
+      dispatch(
+        updateFullWatchlist(watchlistData ? JSON.parse(watchlistData) : [])
+      );
     }
   }, [user, dispatch]);
 
@@ -60,27 +76,13 @@ function App() {
         <Router>
           <Suspense fallback={<Spinner />}>
             <Routes>
-              <Route 
-                path="auth"
-                element={
-                  <Auth />
-                }
-              >
-                <Route
-                  index
-                  element={<Navigate to="login" replace />}
-                />
-                <Route 
-                  path="login"
-                  element={<LoginForm />} 
-                />
-                <Route 
-                  path="register"
-                  element={<RegisterForm />}
-                />
+              <Route path="auth" element={<Auth />}>
+                <Route index element={<Navigate to="login" replace />} />
+                <Route path="login" element={<LoginForm />} />
+                <Route path="register" element={<RegisterForm />} />
               </Route>
-              <Route 
-                path="/" 
+              <Route
+                path="/"
                 element={
                   <AppLayout>
                     <Home />
@@ -95,27 +97,14 @@ function App() {
                       <Dashboard />
                     </ProtectedRoute>
                   </AppLayout>
-                } 
+                }
               >
-                <Route
-                  index
-                  element={<Navigate to="user" replace />}
-                />
-                <Route 
-                  index 
-                  path="user"
-                  element={<UserPanel />}
-                />
-                <Route 
-                  path="category"
-                  element={<CategoryPanel />}
-                />
-                <Route 
-                  path="product"
-                  element={<ProductPanel />}
-                />
+                <Route index element={<Navigate to="user" replace />} />
+                <Route index path="user" element={<UserPanel />} />
+                <Route path="category" element={<CategoryPanel />} />
+                <Route path="product" element={<ProductPanel />} />
               </Route>
-              <Route 
+              <Route
                 path="category"
                 element={
                   <AppLayout>
@@ -125,10 +114,7 @@ function App() {
                   </AppLayout>
                 }
               >
-                <Route 
-                  path=":id"
-                  element={<CategoryProductList />}
-                />
+                <Route path=":id" element={<CategoryProductList />} />
               </Route>
               <Route
                 path="product"
@@ -140,17 +126,17 @@ function App() {
                   </AppLayout>
                 }
               />
-              <Route 
-                path="watchlist" 
+              <Route
+                path="watchlist"
                 element={
                   <AppLayout>
                     <ProtectedRoute authorizeRole={["customer", "admin"]}>
                       <WatchList />
                     </ProtectedRoute>
                   </AppLayout>
-                } 
+                }
               />
-              <Route 
+              <Route
                 path="search"
                 element={
                   <AppLayout>
@@ -158,28 +144,28 @@ function App() {
                   </AppLayout>
                 }
               />
-              <Route 
-                path="checkout" 
+              <Route
+                path="checkout"
                 element={
                   <AppLayout>
                     <ProtectedRoute authorizeRole={["customer", "admin"]}>
                       <Checkout />
                     </ProtectedRoute>
                   </AppLayout>
-                } 
+                }
               />
-              <Route 
-                path="profile" 
+              <Route
+                path="profile"
                 element={
                   <AppLayout>
                     <ProtectedRoute authorizeRole={["customer", "admin"]}>
                       <Profile />
                     </ProtectedRoute>
                   </AppLayout>
-                } 
+                }
               />
-              <Route 
-                path="*" 
+              <Route
+                path="*"
                 element={
                   <AppLayout>
                     <ErrorPage />
@@ -189,16 +175,16 @@ function App() {
             </Routes>
           </Suspense>
         </Router>
-        <Toaster 
+        <Toaster
           position="top-center"
           gutter={14}
-          containerStyle={{margin: "5px"}}
+          containerStyle={{ margin: "5px" }}
           toastOptions={{
             success: {
               duration: 3000,
             },
             error: {
-              duration: 5000
+              duration: 5000,
             },
             style: {
               padding: "12px",
@@ -210,13 +196,13 @@ function App() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "1rem"
-            }
+              gap: "1rem",
+            },
           }}
         />
       </ThemeProvider>
     </QueryClientProvider>
-  )
+  );
 }
 
-export default App
+export default App;
