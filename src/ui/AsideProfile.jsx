@@ -12,14 +12,14 @@ const StyledAsideProfileContainer = styled.div`
   justify-content: end;
   flex-direction: column;
   gap: 1.5rem;
-`
+`;
 
 const StyledProfileLink = styled(Link)`
   width: 100%;
   display: flex;
   align-items: center;
   gap: 2.5rem;
-`
+`;
 
 const StyledProfileDetails = styled.div`
   position: relative;
@@ -29,15 +29,15 @@ const StyledProfileDetails = styled.div`
   font-size: 1.6rem;
   font-weight: bold;
 
-  >span {
+  > span {
     font-size: 1rem;
     color: var(--color-grey-500);
     font-weight: normal;
     font-size: 1.2rem;
   }
-`
+`;
 
-const StyledAuthBtn = styled.button`
+const StyledAuthBtn = styled(Link)`
   height: 40px;
   padding: 0 8px;
   border-radius: 8px;
@@ -63,20 +63,20 @@ const StyledAuthBtn = styled.button`
     box-shadow: var(--shadow-btn-green);
   }
 
-  >svg {
+  > svg {
     font-size: 1.8rem;
     font-weight: bold;
     flex-shrink: 0;
     transition: var(--main-transition);
   }
-`
+`;
 
 function AsideProfile() {
   const user = useSelector(getUser);
 
   return (
     <StyledAsideProfileContainer>
-      {user && 
+      {user && (
         <StyledProfileLink to="/profile">
           <ProfilePicture />
           <StyledProfileDetails>
@@ -84,23 +84,22 @@ function AsideProfile() {
             <span>{user.email}</span>
           </StyledProfileDetails>
         </StyledProfileLink>
-      }
-      <StyledAuthBtn
-        className={user ? "logout" : "login"}
-      >
-        {user ?
-        <>
-          <HiOutlineLogout />
-          <span>Log out</span>
-        </> : 
-        <>
-          <HiOutlineLogin />
-          <span>Log in</span>
-        </>
-      }
+      )}
+      <StyledAuthBtn className={user ? "logout" : "login"} to={"auth/login"}>
+        {user ? (
+          <>
+            <HiOutlineLogout />
+            <span>Log out</span>
+          </>
+        ) : (
+          <>
+            <HiOutlineLogin />
+            <span>Log in</span>
+          </>
+        )}
       </StyledAuthBtn>
     </StyledAsideProfileContainer>
-  )
+  );
 }
 
-export default AsideProfile
+export default AsideProfile;

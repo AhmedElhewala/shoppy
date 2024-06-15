@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { HiUser } from "react-icons/hi";
 import { getUser } from "../features/authentication/userSlice";
 import { useState } from "react";
@@ -17,20 +17,20 @@ const StyledProfilePicture = styled.div`
   overflow: hidden;
   flex-shrink: 0;
 
-  &>svg {
+  & > svg {
     font-weight: bold;
     font-size: 2.6rem;
     color: var(--color-grey-900);
     transition: var(--main-transition);
   }
 
-  >img {
+  > img {
     max-width: 100%;
     object-fit: cover;
   }
-`
+`;
 
-function ProfilePicture({toggleProfileMenu}) {
+function ProfilePicture({ toggleProfileMenu }) {
   const [imgError, setImgError] = useState(false);
   const user = useSelector(getUser);
 
@@ -39,15 +39,18 @@ function ProfilePicture({toggleProfileMenu}) {
   }
 
   return (
-    <StyledProfilePicture
-      onClick={toggleProfileMenu}
-    >
-      {user.avatar && !imgError ? 
-        <img src={user.avatar} alt={`${user.name} Avatar`} onError={handleImgError} /> :
+    <StyledProfilePicture onClick={toggleProfileMenu}>
+      {user && !imgError ? (
+        <img
+          src={user?.avatar}
+          alt={`${user?.name} Avatar`}
+          onError={handleImgError}
+        />
+      ) : (
         <HiUser />
-      }
+      )}
     </StyledProfilePicture>
-  )
+  );
 }
 
-export default ProfilePicture
+export default ProfilePicture;

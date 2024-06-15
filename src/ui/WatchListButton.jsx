@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { HiHeart } from "react-icons/hi";
@@ -8,14 +8,14 @@ const StyledWatchlistLink = styled(Link)`
   cursor: pointer;
   position: relative;
 
-  &>svg {
+  & > svg {
     font-weight: bold;
     font-size: 2.2rem;
     color: var(--color-grey-900);
     filter: drop-shadow(0 1px 2px var(--color-grey-500));
     transition: var(--main-transition);
   }
-`
+`;
 
 const StyledWatchlistQuantity = styled.span`
   width: 2rem;
@@ -34,17 +34,19 @@ const StyledWatchlistQuantity = styled.span`
   z-index: 999;
   font-size: 1.2rem;
   font-weight: bold;
-`
+`;
 
 function FavouritesButton() {
   const watchListQuantity = useSelector(getTotalWatchlistQuantity);
 
   return (
     <StyledWatchlistLink to="/watchlist">
-      {watchListQuantity > 0 && <StyledWatchlistQuantity>{watchListQuantity}</StyledWatchlistQuantity>}
+      {watchListQuantity > 0 && (
+        <StyledWatchlistQuantity>{watchListQuantity}</StyledWatchlistQuantity>
+      )}
       <HiHeart />
     </StyledWatchlistLink>
-  )
+  );
 }
 
-export default FavouritesButton
+export default FavouritesButton;

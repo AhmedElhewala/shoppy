@@ -1,10 +1,13 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addItemToWatchlist, checkIsItemInWatchlist, deleteItemFromWatchlist } from "../features/watchlist/watchlistSlice";
+import {
+  addItemToWatchlist,
+  checkIsItemInWatchlist,
+  deleteItemFromWatchlist,
+} from "../features/watchlist/watchlistSlice";
 import { getUser } from "../features/authentication/userSlice";
 import { HiHeart } from "react-icons/hi";
-
 
 const StyledProductWatchlistButton = styled.span`
   width: 3.2rem;
@@ -20,7 +23,7 @@ const StyledProductWatchlistButton = styled.span`
   box-shadow: 0 0 4px 2px #fff;
   color: #333;
   transition: var(--main-transition);
-  z-index: 999;
+  z-index: 990;
   cursor: pointer;
 
   &.marked {
@@ -33,17 +36,17 @@ const StyledProductWatchlistButton = styled.span`
     border-radius: 0.7rem;
     box-shadow: 0 0 4px 2px #fff;
 
-    >svg {
-    font-size: 2rem;
-  }
+    > svg {
+      font-size: 2rem;
+    }
   }
 
-  >svg {
+  > svg {
     font-size: 2.4rem;
   }
-`
+`;
 
-function ProductWatchlistButton({product, size}) {
+function ProductWatchlistButton({ product, size }) {
   const user = useSelector(getUser);
   const dispatch = useDispatch();
   const isInWatchlist = useSelector(checkIsItemInWatchlist(product.id));
@@ -54,28 +57,28 @@ function ProductWatchlistButton({product, size}) {
       const newProduct = {
         ...product,
         userId: user.id,
-      }
+      };
       if (isInWatchlist) {
         dispatch(deleteItemFromWatchlist(newProduct));
       } else {
         dispatch(addItemToWatchlist(newProduct));
       }
     } else {
-      navigate("/auth/login")
+      navigate("/auth/login");
     }
   }
 
   return (
     <StyledProductWatchlistButton
-        className={`
+      className={`
           ${isInWatchlist ? "marked" : ""}
           ${size === "small" ? "small" : ""}
         `}
-        onClick={handleToggleWatchlist}
-      >
-        <HiHeart />
-      </StyledProductWatchlistButton>
-  )
+      onClick={handleToggleWatchlist}
+    >
+      <HiHeart />
+    </StyledProductWatchlistButton>
+  );
 }
 
-export default ProductWatchlistButton
+export default ProductWatchlistButton;

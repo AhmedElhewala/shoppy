@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import useCategoryList from "../features/category/useCategoryList";
 import HomeProductSection from "../ui/HomeProductSection";
 
@@ -10,7 +10,11 @@ const StyledHomeMainContainer = styled.main`
   display: flex;
   flex-direction: column;
   gap: 4rem;
-`
+
+  @media screen and (max-width: 767px) {
+    padding: 40px 16px 80px;
+  }
+`;
 
 const HomeMainHeading = styled.h1`
   width: 100%;
@@ -34,28 +38,26 @@ const HomeMainHeading = styled.h1`
     left: 0;
   }
 
-  >svg {
+  > svg {
     color: var(--color-btn-red);
     filter: drop-shadow(0 0 1px var(--color-btn-red));
   }
-`
+`;
 
 function Home() {
-  const {categories} = useCategoryList();
+  const { categories } = useCategoryList();
 
   return (
     <StyledHomeMainContainer>
-      <HomeMainHeading>Shop at home, hope you find your needs ❤</HomeMainHeading>
+      <HomeMainHeading>
+        Shop at home, hope you find your needs ❤
+      </HomeMainHeading>
       {categories?.length > 0 &&
-        categories.map(category => (
-          <HomeProductSection 
-            key={category.id}
-            category={category}
-          />
-        ))
-      }
+        categories.map((category) => (
+          <HomeProductSection key={category.id} category={category} />
+        ))}
     </StyledHomeMainContainer>
-  )
+  );
 }
 
-export default Home
+export default Home;

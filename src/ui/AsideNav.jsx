@@ -1,7 +1,7 @@
-import styled from "styled-components"
-import Logo from "./Logo"
-import NavList from "./NavList"
-import AsideProfile from "./AsideProfile"
+import styled from "styled-components";
+import Logo from "./Logo";
+import NavList from "./NavList";
+import AsideProfile from "./AsideProfile";
 
 const StyledAside = styled.aside`
   background-color: var(--color-grey-100);
@@ -16,6 +16,12 @@ const StyledAside = styled.aside`
   box-shadow: 0 0 8px 0 var(--color-grey-500);
   transition: var(--main-transition);
   overflow-y: auto;
+  position: relative;
+
+  @media screen and (max-width: 767px) {
+    position: absolute;
+    z-index: 999;
+  }
 
   &.open {
     width: 26rem;
@@ -28,18 +34,16 @@ const StyledAside = styled.aside`
   &::-webkit-scrollbar-horizontal {
     height: 0;
   }
-`
+`;
 
-function AsideNav({isAsideOpen}) {
+function AsideNav({ isAsideOpen }) {
   return (
-    <StyledAside
-      className={isAsideOpen ? "open" : ""}
-    >
+    <StyledAside className={isAsideOpen ? "open" : ""}>
       <Logo />
-      <NavList isAsideOpen={isAsideOpen}/>
+      <NavList isAsideOpen={isAsideOpen} />
       <AsideProfile />
     </StyledAside>
-  )
+  );
 }
 
-export default AsideNav
+export default AsideNav;

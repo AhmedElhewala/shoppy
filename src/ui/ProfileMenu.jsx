@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-import styled from "styled-components"
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 import { HiDatabase, HiUser } from "react-icons/hi";
 import { HiHeart } from "react-icons/hi";
@@ -8,7 +8,6 @@ import { useRef } from "react";
 import useOutsideClose from "../hooks/useOutsideClose";
 import { useSelector } from "react-redux";
 import { getUser } from "../features/authentication/userSlice";
-
 
 const StyledProfileContainer = styled.div`
   min-width: 25rem;
@@ -24,7 +23,7 @@ const StyledProfileContainer = styled.div`
   gap: 3rem;
   box-shadow: 0 1px 4px 2px var(--color-grey-500);
   transition: var(--main-transition);
-`
+`;
 
 const StyledProfileDetails = styled.div`
   width: 100%;
@@ -46,23 +45,23 @@ const StyledProfileDetails = styled.div`
     bottom: -1.2rem;
   }
 
-  >span {
+  > span {
     font-size: 1.2rem;
     color: var(--color-grey-500);
     font-weight: normal;
   }
-`
+`;
 
 const StyledProfileMenu = styled.ul`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-`
+`;
 
 const ProfileMenuItem = styled.li`
   width: 100%;
-`
+`;
 
 const ProfileMenuLink = styled(Link)`
   width: 100%;
@@ -74,63 +73,65 @@ const ProfileMenuLink = styled(Link)`
   &:hover {
     padding-left: 1rem;
   }
-`
+`;
 
 const AuthButtonContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
-function ProfileMenu({closeProfileMenu}) {
+function ProfileMenu({ closeProfileMenu }) {
   const user = useSelector(getUser);
   const profileRef = useRef();
 
-  useOutsideClose(profileRef, closeProfileMenu, true)
+  useOutsideClose(profileRef, closeProfileMenu, true);
 
   return (
-    <StyledProfileContainer ref={profileRef} >
-      <StyledProfileDetails>
-        {user.name}
-        <span>{user.email}</span>
-      </StyledProfileDetails>
-      <StyledProfileMenu>
-        <ProfileMenuItem>
-          <ProfileMenuLink 
-            to="/profile" 
-            onClick={closeProfileMenu}
-          >
-            <HiUser />
-            Profile
-          </ProfileMenuLink>
-        </ProfileMenuItem>
-        {user?.role === "admin" && (
-          <ProfileMenuItem>
-            <ProfileMenuLink 
-              to="/dashboard"
-              onClick={closeProfileMenu}
-            >
-              <HiDatabase />
-              Dashboard
-            </ProfileMenuLink>
-          </ProfileMenuItem>
-        )}
-        <ProfileMenuItem>
-          <ProfileMenuLink 
-            to="/watchlist"
-            onClick={closeProfileMenu}
-          >
-            <HiHeart />
-            Watch List
-          </ProfileMenuLink>
-        </ProfileMenuItem>
-      </StyledProfileMenu>
-      <AuthButtonContainer>
-        <UserAuthButton />
-      </AuthButtonContainer>
+    <StyledProfileContainer ref={profileRef}>
+      {user ? (
+        <>
+          <StyledProfileDetails>
+            {user.name}
+            <span>{user.email}</span>
+          </StyledProfileDetails>
+          <StyledProfileMenu>
+            <ProfileMenuItem>
+              <ProfileMenuLink to="/profile" onClick={closeProfileMenu}>
+                <HiUser />
+                Profile
+              </ProfileMenuLink>
+            </ProfileMenuItem>
+            {user?.role === "admin" && (
+              <ProfileMenuItem>
+                <ProfileMenuLink to="/dashboard" onClick={closeProfileMenu}>
+                  <HiDatabase />
+                  Dashboard
+                </ProfileMenuLink>
+              </ProfileMenuItem>
+            )}
+            <ProfileMenuItem>
+              <ProfileMenuLink to="/watchlist" onClick={closeProfileMenu}>
+                <HiHeart />
+                Watch List
+              </ProfileMenuLink>
+            </ProfileMenuItem>
+          </StyledProfileMenu>
+          <AuthButtonContainer>
+            <UserAuthButton />
+          </AuthButtonContainer>
+        </>
+      ) : (
+        <>
+          <StyledProfileDetails>Hello, guest</StyledProfileDetails>
+          <AuthButtonContainer>
+            <UserAuthButton />
+          </AuthButtonContainer>
+        </>
+      )}
     </StyledProfileContainer>
-  )
+  );
 }
 
-export default ProfileMenu
+export default ProfileMenu;

@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { getUser } from "../features/authentication/userSlice";
 
 import ProfilePicture from "./ProfilePicture";
 import DarkModeBtn from "./DarkModeBtn";
@@ -9,9 +7,8 @@ import CartButton from "./CartButton";
 import ProfileMenu from "./ProfileMenu";
 import { useState } from "react";
 import SearchInput from "./SearchInput";
-import { HiOutlineChevronRight, HiOutlineLogin, HiOutlineSearch } from "react-icons/hi";
+import { HiOutlineChevronRight, HiOutlineSearch } from "react-icons/hi";
 import Cart from "../features/cart/Cart";
-import { Link } from "react-router-dom";
 
 const StyledHeader = styled.header`
   width: calc(100% - 6rem);
@@ -21,13 +18,14 @@ const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 9999;
   transition: var(--main-transition);
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  @media screen and  (max-width: 767px) {
+  @media screen and (max-width: 767px) {
+    justify-content: flex-end;
     padding-left: 30px;
     gap: 1.5rem;
     flex-wrap: wrap;
@@ -36,7 +34,7 @@ const StyledHeader = styled.header`
   &.shrink {
     width: calc(100% - 26rem);
   }
-`
+`;
 
 const ToggleNavBtn = styled.span`
   width: 3rem;
@@ -57,73 +55,59 @@ const ToggleNavBtn = styled.span`
   z-index: 10000;
 
   &.open {
-    >svg {
+    > svg {
       transform: rotate(180deg);
     }
   }
 
-  >svg {
+  > svg {
     font-size: 1.6rem;
     transition: var(--main-transition);
   }
-`
+`;
 
 const SearchShowBtn = styled.span`
   display: none;
   align-items: center;
   justify-content: center;
 
-  @media screen and  (max-width: 767px) {
+  @media screen and (max-width: 767px) {
     display: flex;
   }
 
-  >svg {
+  > svg {
     font-weight: bold;
     font-size: 1.8rem;
   }
-`
+`;
 
 const NavIconsContainer = styled.div`
   display: flex;
-  align-items: center;  
-  gap: 1.5rem;
+  align-items: center;
+  gap: 2rem;
   order: 2;
 
-  @media screen and  (max-width: 767px) {
+  @media screen and (max-width: 767px) {
     gap: 1rem;
     flex: 1;
     justify-content: end;
     order: 1;
   }
-`
+`;
 
-const StyledLoginBtn = styled(Link)`
-  background-color: var(--color-btn-green);
-  box-shadow: var(--shadow-btn-green);
-  color: #efefef;
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-size: 1.4rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: var(--main-transition);
-
-  >svg {
-    font: 1.8rem;
-  }
-`
-
-function Header({isAsideOpen, toggleOpenAside, handleCloseAside, showSerachBar, toggleShowSearch}) {
+function Header({
+  isAsideOpen,
+  toggleOpenAside,
+  handleCloseAside,
+  showSerachBar,
+  toggleShowSearch,
+}) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const user = useSelector(getUser);
-  
+
   function toggleProfileMenu() {
     if (isAsideOpen && window.innerWidth <= 767) handleCloseAside();
-    setIsProfileOpen(open => !open);
+    setIsProfileOpen((open) => !open);
   }
 
   function closeProfileMenu() {
@@ -132,7 +116,7 @@ function Header({isAsideOpen, toggleOpenAside, handleCloseAside, showSerachBar, 
 
   function toggleShoppingCart() {
     if (isAsideOpen && window.innerWidth <= 767) handleCloseAside();
-    setIsCartOpen(open => !open);
+    setIsCartOpen((open) => !open);
   }
 
   function closeShoppingCart() {
@@ -140,45 +124,27 @@ function Header({isAsideOpen, toggleOpenAside, handleCloseAside, showSerachBar, 
   }
 
   return (
-    <StyledHeader
-      className={isAsideOpen ? "shrink" : ""}
-    >
+    <StyledHeader className={isAsideOpen ? "shrink" : ""}>
       <ToggleNavBtn
         onClick={toggleOpenAside}
         className={isAsideOpen ? "open" : ""}
       >
         <HiOutlineChevronRight />
       </ToggleNavBtn>
-      <SearchShowBtn
-        onClick={toggleShowSearch}
-      >
-        <HiOutlineSearch />
-      </SearchShowBtn>
-      <SearchInput 
-        isShow={showSerachBar}
-      />
+      <SearchInput isShow={showSerachBar} />
       <NavIconsContainer>
-        {user ?
-          <ProfilePicture 
-            toggleProfileMenu={toggleProfileMenu}
-          /> :
-          <StyledLoginBtn
-            to="/auth/login"
-          >
-            <HiOutlineLogin />
-            <span>Log in</span>
-          </StyledLoginBtn>
-        }
+        <ProfilePicture toggleProfileMenu={toggleProfileMenu} />
+        <SearchShowBtn onClick={toggleShowSearch}>
+          <HiOutlineSearch />
+        </SearchShowBtn>
         <DarkModeBtn />
         <WatchListButton />
-        <CartButton 
-          toggleShoppingCart={toggleShoppingCart}
-        />
+        <CartButton toggleShoppingCart={toggleShoppingCart} />
       </NavIconsContainer>
-      {(isProfileOpen && user) && <ProfileMenu closeProfileMenu={closeProfileMenu} />}
+      {isProfileOpen && <ProfileMenu closeProfileMenu={closeProfileMenu} />}
       {isCartOpen && <Cart closeShoppingCart={closeShoppingCart} />}
     </StyledHeader>
-  )
+  );
 }
 
-export default Header
+export default Header;
