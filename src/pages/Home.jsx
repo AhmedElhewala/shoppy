@@ -25,6 +25,8 @@ const HomeMainHeading = styled.h1`
   gap: 1rem;
   font-size: 2.2rem;
   position: relative;
+  text-wrap: balance;
+  text-align: center;
   filter: drop-shadow(0 0 1px var(--color-grey-600));
 
   &::after {

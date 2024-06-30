@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProfilePicture from "./ProfilePicture";
 
 import { HiOutlineLogin, HiOutlineLogout } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { getUser } from "../features/authentication/userSlice";
+import useLogout from "../features/authentication/useLogout";
 
 const StyledAsideProfileContainer = styled.div`
   flex: 1;
@@ -37,7 +38,7 @@ const StyledProfileDetails = styled.div`
   }
 `;
 
-const StyledAuthBtn = styled(Link)`
+const StyledAuthBtn = styled.button`
   height: 40px;
   padding: 0 8px;
   border-radius: 8px;
@@ -73,6 +74,8 @@ const StyledAuthBtn = styled(Link)`
 
 function AsideProfile() {
   const user = useSelector(getUser);
+  const { logout } = useLogout();
+  const navigate = useNavigate();
 
   return (
     <StyledAsideProfileContainer>
@@ -85,7 +88,16 @@ function AsideProfile() {
           </StyledProfileDetails>
         </StyledProfileLink>
       )}
-      <StyledAuthBtn className={user ? "logout" : "login"} to={"auth/login"}>
+      <StyledAuthBtn
+        className={user ? "logout" : "login"}
+        onClick={() => {
+          if (user) {
+            logout();
+          } else {
+            navigate("/auth/login");
+          }
+        }}
+      >
         {user ? (
           <>
             <HiOutlineLogout />

@@ -4,6 +4,7 @@ import Header from "./Header";
 import { useState } from "react";
 import Footer from "./Footer";
 import GoUpBtn from "./GoUpBtn";
+import NavBtn from "./NavBtn";
 
 const StyledAppLayout = styled.div`
   width: 100%;
@@ -19,11 +20,6 @@ const StyledHeaderMainContainer = styled.div`
   padding-top: 6rem;
   min-height: 100vh;
   position: relative;
-  left: 26rem;
-
-  &.full {
-    left: 6rem;
-  }
 
   @media screen and (max-width: 767px) {
     width: calc(100% - 6rem);
@@ -55,6 +51,7 @@ function AppLayout({ children }) {
   return (
     <StyledAppLayout>
       <AsideNav isAsideOpen={isAsideOpen} toggleOpenAside={toggleOpenAside} />
+      <NavBtn isAsideOpen={isAsideOpen} toggleOpenAside={toggleOpenAside} />
       <StyledHeaderMainContainer
         className={`
           ${!isAsideOpen ? "full" : ""}

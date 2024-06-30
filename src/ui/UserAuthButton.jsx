@@ -1,9 +1,10 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 import { HiOutlineLogin, HiOutlineLogout } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { getUser } from "../features/authentication/userSlice";
 import useLogout from "../features/authentication/useLogout";
+import { useNavigate } from "react-router-dom";
 
 const StyledAuthButton = styled.div`
   width: 10em;
@@ -34,14 +35,15 @@ const StyledAuthButton = styled.div`
     transform: scale(1.05);
   }
 
-  >svg {
+  > svg {
     font-weight: bold;
   }
-`
+`;
 
 function UserAuthButton() {
   const user = useSelector(getUser);
-  const {logout} = useLogout();
+  const { logout } = useLogout();
+  const navigate = useNavigate();
 
   return (
     <StyledAuthButton
@@ -49,21 +51,24 @@ function UserAuthButton() {
       onClick={() => {
         if (user) {
           logout();
+        } else {
+          navigate("/auth/login");
         }
       }}
     >
-      {user ?
+      {user ? (
         <>
           <HiOutlineLogout />
           Log out
-        </> : 
+        </>
+      ) : (
         <>
           <HiOutlineLogin />
           Log in
         </>
-      }
+      )}
     </StyledAuthButton>
-  )
+  );
 }
 
-export default UserAuthButton
+export default UserAuthButton;

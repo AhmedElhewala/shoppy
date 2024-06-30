@@ -7,7 +7,7 @@ import CartButton from "./CartButton";
 import ProfileMenu from "./ProfileMenu";
 import { useState } from "react";
 import SearchInput from "./SearchInput";
-import { HiOutlineChevronRight, HiOutlineSearch } from "react-icons/hi";
+import { HiOutlineSearch } from "react-icons/hi";
 import Cart from "../features/cart/Cart";
 
 const StyledHeader = styled.header`
@@ -33,36 +33,6 @@ const StyledHeader = styled.header`
 
   &.shrink {
     width: calc(100% - 26rem);
-  }
-`;
-
-const ToggleNavBtn = styled.span`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  position: fixed;
-  top: 6rem;
-  left: -1.5rem;
-  font-weight: bold;
-  background-color: var(--color-grey-800);
-  color: var(--color-grey-200);
-  box-shadow: 0 0 4px 1px var(--color-grey-500);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--main-transition);
-  z-index: 10000;
-
-  &.open {
-    > svg {
-      transform: rotate(180deg);
-    }
-  }
-
-  > svg {
-    font-size: 1.6rem;
-    transition: var(--main-transition);
   }
 `;
 
@@ -97,7 +67,6 @@ const NavIconsContainer = styled.div`
 
 function Header({
   isAsideOpen,
-  toggleOpenAside,
   handleCloseAside,
   showSerachBar,
   toggleShowSearch,
@@ -125,12 +94,6 @@ function Header({
 
   return (
     <StyledHeader className={isAsideOpen ? "shrink" : ""}>
-      <ToggleNavBtn
-        onClick={toggleOpenAside}
-        className={isAsideOpen ? "open" : ""}
-      >
-        <HiOutlineChevronRight />
-      </ToggleNavBtn>
       <SearchInput isShow={showSerachBar} />
       <NavIconsContainer>
         <ProfilePicture toggleProfileMenu={toggleProfileMenu} />

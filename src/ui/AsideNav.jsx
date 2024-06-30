@@ -20,7 +20,7 @@ const StyledAside = styled.aside`
 
   @media screen and (max-width: 767px) {
     position: absolute;
-    z-index: 999;
+    z-index: 99999;
   }
 
   &.open {
