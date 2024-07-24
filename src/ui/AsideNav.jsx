@@ -7,19 +7,18 @@ const StyledAside = styled.aside`
   background-color: var(--color-grey-100);
   padding: 15px;
   width: 6rem;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
   box-shadow: 0 0 8px 0 var(--color-grey-500);
   transition: var(--main-transition);
   overflow-y: auto;
-  position: relative;
+  position: fixed;
+  z-index: 99999;
 
   @media screen and (max-width: 767px) {
-    position: absolute;
     z-index: 99999;
   }
 

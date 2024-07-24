@@ -20,6 +20,11 @@ const StyledHeaderMainContainer = styled.div`
   padding-top: 6rem;
   min-height: 100vh;
   position: relative;
+  left: 26rem;
+
+  &.full {
+    left: 6rem;
+  }
 
   @media screen and (max-width: 767px) {
     width: calc(100% - 6rem);

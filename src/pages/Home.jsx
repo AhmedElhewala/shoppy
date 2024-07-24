@@ -3,7 +3,7 @@ import useCategoryList from "../features/category/useCategoryList";
 import HomeProductSection from "../ui/HomeProductSection";
 
 const StyledHomeMainContainer = styled.main`
-  width: 100%;
+  width: calc(100% - 6rem);
   padding: 40px 40px 80px;
   min-height: 90vh;
   position: relative;

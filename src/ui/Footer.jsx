@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 import { useThemeMode } from "../context/ThemeContext";
 import logoLightPath from "/logo-light.png";
 import logoDarkPath from "/logo-dark.png";
-import { FaGooglePlusG, FaFacebookF, FaInstagram, FaXTwitter, FaWhatsapp } from "react-icons/fa6";
+import {
+  FaGooglePlusG,
+  FaFacebookF,
+  FaInstagram,
+  FaXTwitter,
+  FaWhatsapp,
+} from "react-icons/fa6";
 
 const StyledFooter = styled.footer`
   padding: 4rem 0 2rem;
@@ -15,7 +21,11 @@ const StyledFooter = styled.footer`
   box-shadow: 8px 0 4px 2px var(--color-grey-500);
   transition: var(--main-transition);
   margin-top: 8rem;
-`
+
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 6rem);
+  }
+`;
 
 const StyledFooterLogoContainer = styled.div`
   width: 100%;
@@ -27,18 +37,18 @@ const StyledFooterLogoContainer = styled.div`
   color: var(--color-grey-900);
   position: relative;
 
-  >span {
+  > span {
     display: inline-block;
     font-size: 2.2rem;
   }
-`
+`;
 
 const StyledFooterLogo = styled.img`
   display: block;
   max-width: 2.6rem;
   transition: var(--main-transition);
   filter: drop-shadow(0 1px 2px var(--color-grey-500));
-`
+`;
 
 const StyledFeedbackContainer = styled.form`
   width: 100%;
@@ -47,7 +57,7 @@ const StyledFeedbackContainer = styled.form`
   align-items: center;
   gap: 2rem;
   position: relative;
-`
+`;
 
 const StyledFeedbackTextarea = styled.textarea`
   width: 40%;
@@ -61,7 +71,7 @@ const StyledFeedbackTextarea = styled.textarea`
   outline: none;
   resize: none;
   transition: var(--main-transition);
-  
+
   @media (min-width: 768px) and (max-width: 991px) {
     width: 60%;
   }
@@ -73,7 +83,7 @@ const StyledFeedbackTextarea = styled.textarea`
   &:focus {
     box-shadow: 0 0 6px 1px var(--color-grey-500);
   }
-`
+`;
 
 const StyledFeedbackBtn = styled.button`
   width: 40%;
@@ -95,7 +105,7 @@ const StyledFeedbackBtn = styled.button`
   @media screen and (max-width: 767px) {
     width: 80%;
   }
-`
+`;
 
 const StyledSocialLinksContainer = styled.div`
   width: 100%;
@@ -111,7 +121,7 @@ const StyledSocialLinksContainer = styled.div`
   @media screen and (max-width: 767px) {
     gap: 2rem;
   }
-`
+`;
 
 const StyledSocialLink = styled(Link)`
   width: 3rem;
@@ -153,10 +163,10 @@ const StyledSocialLink = styled(Link)`
     transform: scale(1.1);
   }
 
-  >svg {
+  > svg {
     font-size: 2.2rem;
   }
-`
+`;
 
 const StyledCopyright = styled.div`
   width: 100%;
@@ -167,6 +177,8 @@ const StyledCopyright = styled.div`
   justify-content: center;
   position: relative;
   gap: 0.6rem;
+  text-align: center;
+  text-wrap: balance;
 
   &::before {
     content: "";
@@ -179,13 +191,13 @@ const StyledCopyright = styled.div`
     left: 0;
   }
 
-  >svg {
+  > svg {
     color: var(--color-btn-red);
   }
-`
+`;
 
 function Footer() {
-  const {isDark} = useThemeMode();
+  const { isDark } = useThemeMode();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -194,7 +206,7 @@ function Footer() {
   return (
     <StyledFooter>
       <StyledFooterLogoContainer>
-        <StyledFooterLogo 
+        <StyledFooterLogo
           src={isDark ? logoDarkPath : logoLightPath}
           alt="Shoopy Logo"
         />
@@ -202,44 +214,27 @@ function Footer() {
       </StyledFooterLogoContainer>
 
       <StyledFeedbackContainer onSubmit={handleSubmit}>
-        <StyledFeedbackTextarea 
+        <StyledFeedbackTextarea
           name="feedback"
           placeholder="Please! Let us know your feedback..."
         />
-        <StyledFeedbackBtn type="submit">
-          Send
-        </StyledFeedbackBtn>
+        <StyledFeedbackBtn type="submit">Send</StyledFeedbackBtn>
       </StyledFeedbackContainer>
 
       <StyledSocialLinksContainer>
-        <StyledSocialLink
-          key="google"
-          className="google"
-        >
+        <StyledSocialLink key="google" className="google">
           <FaGooglePlusG />
         </StyledSocialLink>
-        <StyledSocialLink
-          key="facebook"
-          className="facebook"
-        >
+        <StyledSocialLink key="facebook" className="facebook">
           <FaFacebookF />
         </StyledSocialLink>
-        <StyledSocialLink
-          key="twitter"
-          className="twitter"
-        >
+        <StyledSocialLink key="twitter" className="twitter">
           <FaXTwitter />
         </StyledSocialLink>
-        <StyledSocialLink
-          key="instagram"
-          className="instagram"
-        >
+        <StyledSocialLink key="instagram" className="instagram">
           <FaInstagram />
         </StyledSocialLink>
-        <StyledSocialLink
-          key="whatsapp"
-          className="whatsapp"
-        >
+        <StyledSocialLink key="whatsapp" className="whatsapp">
           <FaWhatsapp />
         </StyledSocialLink>
       </StyledSocialLinksContainer>
@@ -248,7 +243,7 @@ function Footer() {
         Copyright &copy; 2024, Shoppy. Designed by Ahmed Abd El-Ghany.
       </StyledCopyright>
     </StyledFooter>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

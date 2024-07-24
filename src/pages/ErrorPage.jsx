@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 import { HiOutlineExclamation, HiOutlineArrowSmLeft } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
@@ -12,12 +12,16 @@ const ErrorContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 3rem;
+
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 6rem);
+  }
 `;
 
 const StyledExclamationIcon = styled(HiOutlineExclamation)`
   font-weight: bold;
   font-size: 6rem;
-`
+`;
 
 const ErrorMsgContainer = styled.div`
   font-size: 1.6rem;
@@ -26,11 +30,11 @@ const ErrorMsgContainer = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 2rem;
-`
+`;
 
 const ErrorMsg = styled.p`
   margin: 0;
-`
+`;
 
 const ErrorLink = styled.button`
   font-weight: bold;
@@ -48,16 +52,16 @@ const ErrorLink = styled.button`
   &:hover {
     transform: scale(1.05);
   }
-  &>span {
+  & > span {
     transition: var(--main-transition);
   }
-`
+`;
 
-const StyledHomeIcon = styled(HiOutlineArrowSmLeft )`
+const StyledHomeIcon = styled(HiOutlineArrowSmLeft)`
   transition: var(--main-transition);
   font-weight: bold;
   font-size: 1.8rem;
-`
+`;
 
 function ErrorPage() {
   const navigate = useNavigate();
@@ -66,21 +70,15 @@ function ErrorPage() {
     <ErrorContainer>
       <StyledExclamationIcon />
       <ErrorMsgContainer>
-        <ErrorMsg>
-          Oh, There is an error in reaching this page
-        </ErrorMsg>
-        <ErrorMsg>
-          Please! Go Back and try again 😃
-        </ErrorMsg>
-        <ErrorLink 
-          onClick={() => navigate(-1)}
-        >
+        <ErrorMsg>Oh, There is an error in reaching this page</ErrorMsg>
+        <ErrorMsg>Please! Go Back and try again 😃</ErrorMsg>
+        <ErrorLink onClick={() => navigate(-1)}>
           <StyledHomeIcon />
           <span>Back</span>
         </ErrorLink>
       </ErrorMsgContainer>
     </ErrorContainer>
-  )
+  );
 }
 
-export default ErrorPage
+export default ErrorPage;

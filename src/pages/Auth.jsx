@@ -18,6 +18,10 @@ const StyledAuth = styled.section`
   background-size: cover;
   position: relative;
 
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 6rem);
+  }
+
   &::after {
     content: "";
     width: 100%;

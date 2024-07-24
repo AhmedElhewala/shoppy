@@ -11,7 +11,10 @@ const StyledProductsConainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
-`
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 6rem);
+  }
+`;
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,13 +24,13 @@ function Search() {
       searchParams.set("page", 1);
       setSearchParams(searchParams);
     }
-  }, [searchParams, setSearchParams])
-  
+  }, [searchParams, setSearchParams]);
+
   return (
     <StyledProductsConainer>
       <SearchProductList />
     </StyledProductsConainer>
-  )
+  );
 }
 
-export default Search
+export default Search;
