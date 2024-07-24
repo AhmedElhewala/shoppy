@@ -8,10 +8,8 @@ const StyledProfileContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 6rem);
-  }
+
+  width: calc(100% - 6rem);
 `
 
 function Profile() {

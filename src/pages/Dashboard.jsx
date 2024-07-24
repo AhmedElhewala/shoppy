@@ -12,9 +12,7 @@ const StyledDashboardContainer = styled.div`
   flex-direction: column;
   gap: 4rem;
 
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 6rem);
-  }
+  width: calc(100% - 6rem);
 `
 
 function Dashboard() {

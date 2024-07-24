@@ -13,9 +13,7 @@ const ErrorContainer = styled.div`
   align-items: center;
   gap: 3rem;
 
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 6rem);
-  }
+  width: calc(100% - 6rem);
 `;
 
 const StyledExclamationIcon = styled(HiOutlineExclamation)`

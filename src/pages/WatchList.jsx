@@ -7,10 +7,7 @@ const StyledWatchListContainer = styled.div`
   padding-bottom: 80px;
   min-height: 90vh;
   position: relative;
-
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 6rem);
-  }
+  width: calc(100% - 6rem);
 `;
 
 function WatchList() {

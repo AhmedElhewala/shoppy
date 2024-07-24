@@ -15,9 +15,7 @@ const StyledCheckout = styled.div`
   flex-direction: column;
   gap: 3rem;
 
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 6rem);
-  }
+  width: calc(100% - 6rem);
 `
 
 const StyledCheckoutHeader = styled.div`

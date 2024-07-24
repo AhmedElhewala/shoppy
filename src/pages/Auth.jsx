@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useThemeMode } from "../context/ThemeContext";
 import { getUser } from "../features/authentication/userSlice";
@@ -18,9 +18,7 @@ const StyledAuth = styled.section`
   background-size: cover;
   position: relative;
 
-  @media screen and (max-width: 767px) {
-    width: calc(100% - 6rem);
-  }
+  width: calc(100% - 6rem);
 
   &::after {
     content: "";
@@ -31,7 +29,7 @@ const StyledAuth = styled.section`
     top: 0;
     left: 0;
   }
-`
+`;
 
 const StyledAuthContainer = styled.div`
   width: 50%;
@@ -43,7 +41,7 @@ const StyledAuthContainer = styled.div`
   gap: 6rem;
   position: relative;
   z-index: 99;
-  
+
   @media screen and (max-width: 767px) {
     width: 90%;
   }
@@ -51,7 +49,7 @@ const StyledAuthContainer = styled.div`
   @media (min-width: 768px) and (max-width: 991px) {
     width: 70%;
   }
-`
+`;
 
 const LogoContainer = styled(Link)`
   display: flex;
@@ -61,12 +59,12 @@ const LogoContainer = styled(Link)`
   font-weight: bold;
   color: var(--color-grey-900);
 
-  >span {
+  > span {
     display: inline-block;
     font-size: 2.6rem;
     filter: drop-shadow(0 1px 4px var(--color-grey-500));
   }
-`
+`;
 
 const LogoImg = styled.img`
   display: block;
@@ -77,16 +75,16 @@ const LogoImg = styled.img`
   @media screen and (max-width: 767px) {
     max-width: 2.4rem;
   }
-`
+`;
 
 function Auth() {
-  const {isDark} = useThemeMode();
+  const { isDark } = useThemeMode();
   const user = useSelector(getUser);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      navigate(-1 || "/", {replace: true})
+      navigate(-1 || "/", { replace: true });
     }
   }, [user, navigate]);
 
@@ -94,13 +92,16 @@ function Auth() {
     <StyledAuth>
       <StyledAuthContainer>
         <LogoContainer to="/">
-          <LogoImg src={isDark ? logoDarkPath : logoLightPath} alt="Shoopy Logo" />
+          <LogoImg
+            src={isDark ? logoDarkPath : logoLightPath}
+            alt="Shoopy Logo"
+          />
           <span>Shoppy</span>
         </LogoContainer>
         <Outlet />
       </StyledAuthContainer>
     </StyledAuth>
-  )
+  );
 }
 
-export default Auth
+export default Auth;
