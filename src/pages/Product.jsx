@@ -10,6 +10,10 @@ const StyledProductsContainer = styled.div`
   position: relative;
 
   width: calc(100% - 6rem);
+
+  @media screen and (max-width: 767px) {
+    padding: 40px 16px;
+  }
 `;
 
 function Product() {

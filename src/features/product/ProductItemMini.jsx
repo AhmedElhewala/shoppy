@@ -7,6 +7,8 @@ import ProductWatchlistButton from "../../ui/ProductWatchlistButton";
 import AddProductToCartBtn from "../../ui/AddProductToCartBtn";
 
 const StyledProductItem = styled.div`
+  min-width: 276px;
+  flex: 1 0 0;
   background-color: var(--color-grey-300);
   color: var(--color-grey-900);
   box-shadow: 0 0 4px 2px var(--color-grey-500);
@@ -21,7 +23,7 @@ const StyledProductItem = styled.div`
   &:hover {
     transform: scale(1.05);
   }
-`
+`;
 
 const StyledProductDetails = styled.div`
   width: 100%;
@@ -30,21 +32,30 @@ const StyledProductDetails = styled.div`
   flex-direction: column;
   gap: 1rem;
   transition: var(--main-transition);
-`
+`;
 
 const StyledProductTitle = styled.h3`
   font-size: 2rem;
-`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
 const StyledProductDescription = styled.p`
   font-size: 1.4rem;
   line-height: 1.4;
   transition: var(--main-transition);
-`
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
 const StyledProductCategoryPrice = styled.div`
   padding: 20px 15px;
-  flex: 1;
   width: 100%;
   display: flex;
   align-items: end;
@@ -53,7 +64,7 @@ const StyledProductCategoryPrice = styled.div`
   gap: 2rem;
   position: relative;
   transition: var(--main-transition);
-`
+`;
 
 const SyledProductCategoryLink = styled(Link)`
   padding: 6px 18px;
@@ -63,27 +74,21 @@ const SyledProductCategoryLink = styled(Link)`
   box-shadow: 0 0 4px 2px var(--color-grey-500);
   font-size: 1.4rem;
   transition: var(--main-transition);
-`
+`;
 
 const StyledProductPrice = styled.span`
   font-weight: bold;
-`
+`;
 
-function ProductItemMini({product}) {
-  const {title, description, images, id, price, category} = product;
-  const {id: idCategory, name: nameCategory} = category;
+function ProductItemMini({ product }) {
+  const { title, description, images, id, price, category } = product;
+  const { id: idCategory, name: nameCategory } = category;
 
   return (
     <StyledProductItem>
-      <ProductWatchlistButton
-        product={product}
-      />
+      <ProductWatchlistButton product={product} />
 
-      <ProductImgBox 
-        key={id}
-        title={title}
-        images={images}
-      />
+      <ProductImgBox key={id} title={title} images={images} />
 
       <StyledProductDetails>
         <StyledProductTitle>{title}</StyledProductTitle>
@@ -91,21 +96,15 @@ function ProductItemMini({product}) {
       </StyledProductDetails>
 
       <StyledProductCategoryPrice>
-        <SyledProductCategoryLink
-          to={`/category/${idCategory}`}
-        >
+        <SyledProductCategoryLink to={`/category/${idCategory}`}>
           {nameCategory}
         </SyledProductCategoryLink>
-        <StyledProductPrice>
-          {formatCurrency(price)}
-        </StyledProductPrice>
+        <StyledProductPrice>{formatCurrency(price)}</StyledProductPrice>
       </StyledProductCategoryPrice>
 
-      <AddProductToCartBtn 
-        product={product}
-      />
+      <AddProductToCartBtn product={product} />
     </StyledProductItem>
-  )
+  );
 }
 
-export default ProductItemMini
+export default ProductItemMini;

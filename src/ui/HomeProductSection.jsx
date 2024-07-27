@@ -15,7 +15,7 @@ const StyledHomeProductSection = styled.div`
   gap: 2rem;
   position: relative;
   transition: var(--main-transition);
-`
+`;
 
 const StyledSectionHeadingLink = styled(Link)`
   display: flex;
@@ -25,10 +25,10 @@ const StyledSectionHeadingLink = styled(Link)`
   font-size: 1.8rem;
   transition: var(--main-transition);
 
-  >svg {
+  > svg {
     font-size: 2rem;
   }
-`
+`;
 
 const StyledProductsListContainer = styled.div`
   padding: 0.8rem;
@@ -45,7 +45,7 @@ const StyledProductsListContainer = styled.div`
   &::-webkit-scrollbar-horizontal {
     height: 0;
   }
-`
+`;
 
 const StyledProductBox = styled.div`
   width: 18rem;
@@ -68,22 +68,21 @@ const StyledProductTitle = styled.h4`
   padding: 0 1rem;
   margin: 1rem 0;
   font-size: 1.4rem;
-`
+`;
 
 const StyledProductPrice = styled.span`
   width: 100%;
   padding: 0 1rem;
   font-size: 1.4rem;
   font-weight: bold;
-  flex: 1;
   display: flex;
   align-items: end;
   justify-content: end;
-`
+`;
 
-function HomeProductSection({category}) {
-  const {id, name} = category;
-  const {products, count} = useSapmleCategoryProduct(id, 0);
+function HomeProductSection({ category }) {
+  const { id, name } = category;
+  const { products, count } = useSapmleCategoryProduct(id, 0);
   const productsContainerRef = useRef();
 
   const handleWheel = (e) => {
@@ -102,31 +101,26 @@ function HomeProductSection({category}) {
         ref={productsContainerRef}
       >
         {count > 0 &&
-          products.map(product => (
+          products.map((product) => (
             <StyledProductBox key={product.id}>
-              <ProductWatchlistButton 
-                product={product}
-                size="small"
-              />
+              <ProductWatchlistButton product={product} size="small" />
 
-              <ProductImgBox 
+              <ProductImgBox
                 key={product.id}
                 images={product.images}
                 title={product.title}
                 size="small"
               />
               <StyledProductTitle>{product.title}</StyledProductTitle>
-              <StyledProductPrice>{formatCurrency(product.price)}</StyledProductPrice>
-              <AddProductToCartBtn 
-                product={product}
-                size="small"
-              />
+              <StyledProductPrice>
+                {formatCurrency(product.price)}
+              </StyledProductPrice>
+              <AddProductToCartBtn product={product} size="small" />
             </StyledProductBox>
-          ))
-        }
+          ))}
       </StyledProductsListContainer>
     </StyledHomeProductSection>
-  )
+  );
 }
 
-export default HomeProductSection
+export default HomeProductSection;

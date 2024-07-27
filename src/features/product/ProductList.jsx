@@ -17,14 +17,10 @@ const StyledProductsSectionContainer = styled.div`
 
 const StyledProductsList = styled.div`
   width: 100%;
+  display: flex;
   gap: 4rem;
-  display: grid;
-  justify-content: space-around;
-  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
-  
-  @media screen and (max-width: 767px) {
-    grid-template-columns: repeat(auto-fill, 100%);
-  }
+  flex-wrap: wrap;
+  position: relative;
 `
 
 function ProductList() {

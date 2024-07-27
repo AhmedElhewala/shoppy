@@ -1,5 +1,5 @@
-import { createPortal } from "react-dom"
-import styled from "styled-components"
+import { createPortal } from "react-dom";
+import styled from "styled-components";
 
 const StyledOverlay = styled.div`
   width: 100%;
@@ -9,16 +9,11 @@ const StyledOverlay = styled.div`
   left: 0;
   background-color: var(--overlay-background);
   backdrop-filter: blur(4px);
-  z-index: 99999;
-`
+  z-index: 9999999999999;
+`;
 
-function Overlay({children}) {
-  return createPortal(
-    <StyledOverlay>
-      {children}
-    </StyledOverlay>,
-    document.body
-  )
+function Overlay({ children }) {
+  return createPortal(<StyledOverlay>{children}</StyledOverlay>, document.body);
 }
 
-export default Overlay
+export default Overlay;
