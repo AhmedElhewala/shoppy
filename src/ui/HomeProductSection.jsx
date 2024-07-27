@@ -102,7 +102,7 @@ function HomeProductSection({ category }) {
         style={{ padding: "0.8rem" }}
         modules={["autoplay"]}
         breakpoints={{
-          320: {
+          480: {
             slidesPerView: 1,
           },
           640: {
