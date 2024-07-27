@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/autoplay";
 import useSapmleCategoryProduct from "../features/category/useSapmleCategoryProduct";
 import { Link } from "react-router-dom";
 import { HiChevronRight } from "react-icons/hi";
@@ -6,7 +9,6 @@ import ProductImgBox from "./ProductImgBox";
 import ProductWatchlistButton from "./ProductWatchlistButton";
 import { formatCurrency } from "../utilities/helpers";
 import AddProductToCartBtn from "./AddProductToCartBtn";
-import { useRef } from "react";
 
 const StyledHomeProductSection = styled.div`
   width: 100%;
@@ -30,13 +32,10 @@ const StyledSectionHeadingLink = styled(Link)`
   }
 `;
 
-const StyledProductsListContainer = styled.div`
-  padding: 0.8rem;
+const StyledProductsListContainer = styled(Swiper)`
   width: 100%;
-  display: flex;
-  gap: 1.5rem;
+  padding: 0.8rem;
   position: relative;
-  overflow-x: auto;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -47,8 +46,9 @@ const StyledProductsListContainer = styled.div`
   }
 `;
 
-const StyledProductBox = styled.div`
-  width: 18rem;
+const StyledProductBox = styled(SwiperSlide)`
+  min-width: 18rem !important;
+  width: 18rem !important;
   min-height: 10rem;
   padding-bottom: 2rem;
   border-radius: 6px;
@@ -57,7 +57,7 @@ const StyledProductBox = styled.div`
   box-shadow: 0 0 4px 2px var(--color-grey-500);
   position: relative;
   flex-shrink: 0;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   gap: 1rem;
   overflow: hidden;
@@ -68,6 +68,11 @@ const StyledProductTitle = styled.h4`
   padding: 0 1rem;
   margin: 1rem 0;
   font-size: 1.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const StyledProductPrice = styled.span`
@@ -83,12 +88,6 @@ const StyledProductPrice = styled.span`
 function HomeProductSection({ category }) {
   const { id, name } = category;
   const { products, count } = useSapmleCategoryProduct(id, 0);
-  const productsContainerRef = useRef();
-
-  const handleWheel = (e) => {
-    e.stopPropagation();
-    productsContainerRef.current.scrollLeft += e.deltaY;
-  };
 
   return (
     <StyledHomeProductSection>
@@ -97,8 +96,28 @@ function HomeProductSection({ category }) {
         <HiChevronRight />
       </StyledSectionHeadingLink>
       <StyledProductsListContainer
-        onWheel={handleWheel}
-        ref={productsContainerRef}
+        spaceBetween={15}
+        slidesPerView={5}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        style={{ padding: "0.8rem" }}
+        modules={["autoplay"]}
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+          },
+          640: {
+            slidesPerView: 2,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          1024: {
+            slidesPerView: 4,
+          },
+          1440: {
+            slidesPerView: 5,
+          },
+        }}
       >
         {count > 0 &&
           products.map((product) => (

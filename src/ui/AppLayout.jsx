@@ -16,6 +16,7 @@ const StyledAppLayout = styled.div`
 `;
 
 const StyledHeaderMainContainer = styled.div`
+  width: calc(100% - 6rem);
   flex: 1 0 0;
   padding-top: 6rem;
   min-height: 100vh;
