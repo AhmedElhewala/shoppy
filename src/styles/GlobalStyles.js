@@ -1,4 +1,4 @@
-import {createGlobalStyle} from "styled-components"
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 :root {
@@ -157,6 +157,24 @@ button {
   height: 100%;
   width: 100%;
 }
+
+/* .p-dropdown-items-wrapper {
+  border-radius: 6px;
+  color: var(--color-grey-100);
+  box-shadow: 0 0 2px 1px var(--color-grey-500);
+  background-color: var(--color-grey-800);
+  
+  .p-dropdown-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  .p-dropdown-item {
+    padding: 6px;
+    &.p-highlight, &:hover {
+      background-color: var(--color-grey-600);
+    }
+  }}
+} */
 `;
 
 export default GlobalStyles;
