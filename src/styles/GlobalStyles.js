@@ -157,7 +157,14 @@ button {
   height: 100%;
   width: 100%;
 }
-
+.p-column-title {
+  &:has(.add-btn) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 /* .p-dropdown-items-wrapper {
   border-radius: 6px;
   color: var(--color-grey-100);

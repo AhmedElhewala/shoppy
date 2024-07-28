@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { FaBoxOpen } from "react-icons/fa";
-import { HiUserCircle } from "react-icons/hi";
 import styled from "styled-components";
 
 const StyledTableImgWrapper = styled.div`
@@ -46,57 +44,31 @@ function TableImgWrapper({ rowData }) {
 
   return (
     <StyledTableImgWrapper>
-      {rowData?.avatar &&
-        (imgError.avatar ? (
-          <HiUserCircle
-            style={{
-              width: "36px",
-              height: "36px",
-              color: "var(--color-grey-700)",
-            }}
-          />
-        ) : (
-          <StyledImg
-            src={rowData.avatar}
-            alt="avatar"
-            onError={() => handleError("avatar")}
-          />
-        ))}
-      {rowData?.image &&
-        (imgError.image ? (
-          <FaBoxOpen
-            style={{
-              width: "36px",
-              height: "36px",
-              color: "var(--color-grey-700)",
-            }}
-          />
-        ) : (
-          <StyledImg
-            src={rowData.image}
-            alt="image"
-            onError={() => handleError("image")}
-          />
-        ))}
+      {rowData?.avatar && !imgError.avatar && (
+        <StyledImg
+          src={rowData.avatar}
+          alt="avatar"
+          onError={() => handleError("avatar")}
+        />
+      )}
+      {rowData?.image && !imgError.image && (
+        <StyledImg
+          src={rowData.image}
+          alt="image"
+          onError={() => handleError("image")}
+        />
+      )}
       {rowData?.images &&
-        rowData.images.map((image, index) =>
-          imgError.images[index] ? (
-            <FaBoxOpen
-              key={index}
-              style={{
-                width: "36px",
-                height: "36px",
-                color: "var(--color-grey-700)",
-              }}
-            />
-          ) : (
-            <StyledImg
-              src={image}
-              alt={`image-${index}`}
-              key={index}
-              onError={() => handleError("images", index)}
-            />
-          )
+        rowData.images.map(
+          (image, index) =>
+            !imgError.images[index] && (
+              <StyledImg
+                src={image}
+                alt={`image-${index}`}
+                key={index}
+                onError={() => handleError("images", index)}
+              />
+            )
         )}
     </StyledTableImgWrapper>
   );
