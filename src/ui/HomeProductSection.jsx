@@ -98,9 +98,7 @@ function HomeProductSection({ category }) {
       <StyledProductsListContainer
         spaceBetween={15}
         slidesPerView={5}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
         style={{ padding: "0.8rem" }}
-        modules={["autoplay"]}
         breakpoints={{
           480: {
             slidesPerView: 1,

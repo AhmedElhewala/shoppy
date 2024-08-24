@@ -49,6 +49,8 @@ const HomeMainHeading = styled.h1`
 function Home() {
   const { categories } = useCategoryList();
 
+  console.log(categories);
+
   return (
     <StyledHomeMainContainer>
       <HomeMainHeading>
